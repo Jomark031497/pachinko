@@ -1,24 +1,11 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import { logger } from "../utils/logger.js";
-import * as usersSchema from "../features/users/users.schema.js";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { envs } from "../config/envs.js";
+import { Pool } from "pg";
 
-const sql = postgres(<string>process.env.DATABASE_URL, {
-  max: 10,
-  idle_timeout: 300,
+export const pool = new Pool({
+  connectionString: envs.DATABASE_URL,
 });
 
-export const db = drizzle(sql, {
-  schema: {
-    ...usersSchema,
-  },
+export const db = drizzle({
+  client: pool,
 });
-
-export const closeDbConnection = async () => {
-  try {
-    await sql.end();
-    logger.info("Database connection closed.");
-  } catch (error) {
-    logger.error("Error closing database connection:", error);
-  }
-};

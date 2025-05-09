@@ -2,24 +2,42 @@ import express from "express";
 import authRoutes from "./features/auth/auth.routes.js";
 import { errorHandler } from "./middleswares/error-handler.js";
 import session from "express-session";
-import { __COOKIE_NAME__ } from "./constants.js";
+import cors from "cors";
+import { __COOKIE_NAME__, __IS_PROD__ } from "./constants.js";
+import connectPgSimple from "connect-pg-simple";
+import { envs } from "./config/envs.js";
+import { pool } from "./db/database.js";
 
 export const createApp = () => {
   const app = express();
 
+  const PgSession = connectPgSimple(session);
+
+  app.use(
+    cors({
+      origin: envs.CLIENT_URL,
+      credentials: true,
+    })
+  );
+
   app.use(express.json());
-  app.use(express.urlencoded());
+  app.use(express.urlencoded({ extended: true }));
 
   app.use(
     session({
-      secret: <string>process.env.SECRET_KEY,
+      store: new PgSession({
+        pool: pool,
+        tableName: "session", // Default table name
+        createTableIfMissing: true, // Optional: auto-create the table
+      }),
+      secret: envs.SECRET_KEY,
       name: __COOKIE_NAME__,
       saveUninitialized: false,
       resave: false,
       cookie: {
         httpOnly: true,
         maxAge: 3600000 * 24, // 1 day
-        secure: process.env.NODE_ENV === "production", // HTTPS-only in production
+        secure: __IS_PROD__, // HTTPS-only in production
       },
     })
   );
