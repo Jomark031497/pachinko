@@ -7,6 +7,7 @@ import { __COOKIE_NAME__, __IS_PROD__ } from "./constants.js";
 import connectPgSimple from "connect-pg-simple";
 import { envs } from "./config/envs.js";
 import { pool } from "./db/database.js";
+import { initializeRoutes } from "./routes.js";
 
 export const createApp = () => {
   const app = express();
@@ -42,7 +43,7 @@ export const createApp = () => {
     })
   );
 
-  app.use("/api/auth", authRoutes);
+  initializeRoutes(app);
 
   app.use(errorHandler);
 
