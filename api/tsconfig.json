@@ -18,7 +18,7 @@
     "lib": ["ESNext"],
     "outDir": "dist",
     "noUncheckedIndexedAccess": true,
-    "typeRoots": ["./src/types/**"],
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "allowJs": true
   },
   "exclude": ["node_modules"],
