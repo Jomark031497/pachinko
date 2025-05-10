@@ -4,7 +4,7 @@ import { Account, accounts, NewAccount, UpdateAccount } from "./accounts.schema.
 import { AppError } from "../../utils/errors.js";
 
 export const getAccountById = async (id: Account["id"]) => {
-  const [account] = await db.select().from(accounts).where(eq(accounts.id, id));
+  const [account] = await db.select().from(accounts).where(eq(accounts.id, id)).limit(1);
 
   return account;
 };

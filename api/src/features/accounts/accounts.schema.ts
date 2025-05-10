@@ -3,11 +3,15 @@ import { relations } from "drizzle-orm";
 import { decimal, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { users } from "../users/users.schema.js";
+import { transactions } from "../transactions/transactions.schema.js";
 
-export const accountTypeEnum = pgEnum("type", ["checking", "savings", "credit", "cash"]);
+export const accountTypeEnum = pgEnum("account_type", ["checking", "savings", "credit", "cash"]);
 
 export const accounts = pgTable("accounts", {
-  id: text("id").primaryKey().default(createId()).notNull(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId())
+    .notNull(),
   name: varchar("name", { length: 255 }).notNull(),
   type: accountTypeEnum().notNull(),
   balance: decimal("balance", { precision: 12, scale: 2 }).notNull().default("0"),
@@ -18,11 +22,12 @@ export const accounts = pgTable("accounts", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const accountsRelations = relations(accounts, ({ one }) => ({
+export const accountsRelations = relations(accounts, ({ one, many }) => ({
   user: one(users, {
     fields: [accounts.userId],
     references: [users.id],
   }),
+  transactions: many(transactions),
 }));
 
 export const insertAccountsSchema = createInsertSchema(accounts);

@@ -1,0 +1,26 @@
+import { Category } from "./categories.schema.js";
+
+export const defaultCategories: Pick<Category, "name" | "type">[] = [
+  { name: "Groceries", type: "expense" },
+  { name: "Rent", type: "expense" },
+  { name: "Utilities", type: "expense" },
+  { name: "Transportation", type: "expense" },
+  { name: "Dining Out", type: "expense" },
+  { name: "Entertainment", type: "expense" },
+  { name: "Healthcare", type: "expense" },
+  { name: "Insurance", type: "expense" },
+  { name: "Subscriptions", type: "expense" },
+  { name: "Education", type: "expense" },
+  { name: "Clothing", type: "expense" },
+  { name: "Personal Care", type: "expense" },
+  { name: "Gifts & Donations", type: "expense" },
+  { name: "Pet Care", type: "expense" },
+  { name: "Taxes", type: "expense" },
+  { name: "Salary", type: "income" },
+  { name: "Freelance", type: "income" },
+  { name: "Investments", type: "income" },
+  { name: "Interest", type: "income" },
+  { name: "Gifts", type: "income" },
+  { name: "Rental Income", type: "income" },
+  { name: "Other", type: "income" },
+];

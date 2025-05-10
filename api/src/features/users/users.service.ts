@@ -3,11 +3,12 @@ import { db } from "../../db/database.js";
 import { NewUser, User, users } from "./users.schema.js";
 import { AppError } from "../../utils/errors.js";
 import { hash } from "argon2";
+import { categories, NewCategory } from "../categories/categories.schema.js";
+import { defaultCategories } from "../categories/categories.utils.js";
 
 export const getUser = async (field: keyof User, value: string) => {
-  const query = await db.select().from(users).where(eq(users[field], value));
-
-  return query[0];
+  const [user] = await db.select().from(users).where(eq(users[field], value)).limit(1);
+  return user;
 };
 
 export const createUser = async (payload: NewUser) => {
@@ -24,20 +25,30 @@ export const createUser = async (payload: NewUser) => {
 
   const hashedPassword = await hash(payload.password);
 
-  const query = await db
-    .insert(users)
-    .values({
-      ...payload,
-      password: hashedPassword,
-    })
-    .returning({
-      id: users.id,
-      username: users.username,
-      email: users.email,
-      fullName: users.fullName,
+  const user = await db.transaction(async (tx) => {
+    const [createdUser] = await tx
+      .insert(users)
+      .values({
+        ...payload,
+        password: hashedPassword,
+      })
+      .returning({
+        id: users.id,
+        username: users.username,
+        email: users.email,
+        fullName: users.fullName,
+      });
+
+    if (!createdUser) throw new AppError(400, "user creation failed");
+
+    const categoriesToInsert: NewCategory[] = defaultCategories.map((item) => {
+      return { ...item, userId: createdUser.id };
     });
 
-  if (!query[0]) throw new AppError(400, "user creation failed");
+    await tx.insert(categories).values(categoriesToInsert);
 
-  return query[0];
+    return createdUser;
+  });
+
+  return user;
 };

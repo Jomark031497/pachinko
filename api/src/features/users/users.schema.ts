@@ -3,9 +3,14 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import { accounts } from "../accounts/accounts.schema.js";
+import { transactions } from "../transactions/transactions.schema.js";
+import { categories } from "../categories/categories.schema.js";
 
 export const users = pgTable("users", {
-  id: text("id").primaryKey().default(createId()).notNull(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId())
+    .notNull(),
   username: varchar("username", { length: 255 }).unique().notNull(),
   email: varchar("email", { length: 255 }).unique().notNull(),
   password: varchar("password", { length: 255 }).notNull(),
@@ -16,6 +21,8 @@ export const users = pgTable("users", {
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
+  transactions: many(transactions),
+  categories: many(categories),
 }));
 
 export const insertUserSchema = createInsertSchema(users);
