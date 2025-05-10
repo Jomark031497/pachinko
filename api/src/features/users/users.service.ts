@@ -4,7 +4,7 @@ import { NewUser, User, users } from "./users.schema.js";
 import { AppError } from "../../utils/errors.js";
 import { hash } from "argon2";
 
-export const getUser = async (field: keyof User, value: string | number) => {
+export const getUser = async (field: keyof User, value: string) => {
   const query = await db.select().from(users).where(eq(users[field], value));
 
   return query[0];

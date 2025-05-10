@@ -24,6 +24,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
     "argon2": "^0.43.0",
     "connect-pg-simple": "^10.0.0",
     "cors": "^2.8.5",

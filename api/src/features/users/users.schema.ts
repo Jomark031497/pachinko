@@ -1,15 +1,22 @@
-import * as t from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
+import { accounts } from "../accounts/accounts.schema.js";
 
-export const users = t.pgTable("users", {
-  id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-  username: t.varchar("username", { length: 255 }).unique().notNull(),
-  email: t.varchar("email", { length: 255 }).unique().notNull(),
-  password: t.varchar("password", { length: 255 }).notNull(),
-  fullName: t.varchar("full_name", { length: 255 }),
-  createdAt: t.timestamp("created_at").notNull().defaultNow(),
-  updatedAt: t.timestamp("updated_at").notNull().defaultNow(),
+export const users = pgTable("users", {
+  id: text("id").primaryKey().default(createId()).notNull(),
+  username: varchar("username", { length: 255 }).unique().notNull(),
+  email: varchar("email", { length: 255 }).unique().notNull(),
+  password: varchar("password", { length: 255 }).notNull(),
+  fullName: varchar("full_name", { length: 255 }),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+  accounts: many(accounts),
+}));
 
 export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);

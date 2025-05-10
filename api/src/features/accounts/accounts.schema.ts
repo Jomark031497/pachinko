@@ -1,0 +1,34 @@
+import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
+import { decimal, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { users } from "../users/users.schema.js";
+
+export const accountTypeEnum = pgEnum("type", ["checking", "savings", "credit", "cash"]);
+
+export const accounts = pgTable("accounts", {
+  id: text("id").primaryKey().default(createId()).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  type: accountTypeEnum().notNull(),
+  balance: decimal("balance", { precision: 12, scale: 2 }).notNull().default("0"),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}));
+
+export const insertAccountsSchema = createInsertSchema(accounts);
+export const selectAccountsSchema = createSelectSchema(accounts);
+export const updateAccountsSchema = insertAccountsSchema.omit({ userId: true, id: true }).partial().strict();
+
+export type Account = typeof accounts.$inferSelect;
+export type NewAccount = typeof accounts.$inferInsert;
+export type UpdateAccount = typeof updateAccountsSchema._type;

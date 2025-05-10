@@ -1,5 +1,4 @@
 import express from "express";
-import authRoutes from "./features/auth/auth.routes.js";
 import { errorHandler } from "./middleswares/error-handler.js";
 import session from "express-session";
 import cors from "cors";
