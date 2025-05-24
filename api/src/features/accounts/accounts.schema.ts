@@ -5,7 +5,9 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { users } from "../users/users.schema.js";
 import { transactions } from "../transactions/transactions.schema.js";
 
-export const accountTypeEnum = pgEnum("account_type", ["checking", "savings", "credit", "cash"]);
+export const ACCOUNT_TYPES = ["checking", "savings", "credit", "cash"] as const;
+
+export const accountTypeEnum = pgEnum("account_type", ACCOUNT_TYPES);
 
 export const accounts = pgTable("accounts", {
   id: text("id")

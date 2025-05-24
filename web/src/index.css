@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+    /* For buttons, links, headers */
+    --color-primary: #F57002;
+    /* For secondary buttons, hover states, accents */
+    --color-secondary: #FFC107;
+    --color-background: #FAFAFA
+}
