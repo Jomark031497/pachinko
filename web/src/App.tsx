@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { AuthContextProvider } from "~/contexts/auth";
+import { RootLayout } from "~/components/layouts/RootLayout";
+import { AuthProvider } from "~/contexts/auth";
 import { ProtectedRoute } from "~/features/auth/components/ProtectedRoute";
 import { Login } from "~/features/auth/routes/Login";
 import { SignUp } from "~/features/auth/routes/SignUp";
@@ -7,23 +8,28 @@ import { Dashboard } from "~/features/dashboard/routes/Dashboard";
 
 const router = createBrowserRouter([
   {
-    element: <AuthContextProvider />,
+    element: <AuthProvider />,
     children: [
       {
-        element: <ProtectedRoute />,
+        element: <RootLayout />,
         children: [
           {
-            index: true,
-            element: <Dashboard />,
+            element: <ProtectedRoute />,
+            children: [
+              {
+                index: true,
+                element: <Dashboard />,
+              },
+            ],
           },
         ],
       },
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
       },
       {
-        path: "signup",
+        path: "/sign-up",
         element: <SignUp />,
       },
     ],

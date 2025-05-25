@@ -1,8 +1,20 @@
-export const Input = () => {
+import { forwardRef, type InputHTMLAttributes } from "react";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  error?: string;
+}
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ label, error, ...rest }, ref) => {
   return (
     <label className="text-sm font-semibold tracking-wide text-gray-500">
-      username
-      <input className="mt-0.5 border-2 block w-full  outline-none rounded px-1.5 py-1 bg-background focus:border-secondary hover:border-secondary/80 transition-all" />
+      {label}
+      <input
+        {...rest}
+        ref={ref}
+        className="bg-background border-primary/50 hover:border-primary/80 focus:border-primary mt-0.5 block w-full rounded border-2 px-1.5 py-1 transition-all outline-none"
+      />
+      {error && <p className="text-red-500">{error}</p>}
     </label>
   );
-};
+});

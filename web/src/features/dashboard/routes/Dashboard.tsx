@@ -1,3 +1,11 @@
+import { useAuth } from "~/features/auth/hooks/useAuth";
+
 export const Dashboard = () => {
-  return <>Dashboard!</>;
+  const { user } = useAuth();
+
+  return (
+    <>
+      <p>Hello {user?.username}</p>
+    </>
+  );
 };

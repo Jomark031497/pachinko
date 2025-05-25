@@ -6,8 +6,3 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
-
-export interface LoginCredentials {
-  username: string;
-  password: string;
-}

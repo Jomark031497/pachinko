@@ -2,8 +2,8 @@
 
 @theme {
     /* For buttons, links, headers */
-    --color-primary: #F57002;
+    --color-primary: #000;
     /* For secondary buttons, hover states, accents */
-    --color-secondary: #FFC107;
+    --color-secondary: #CCC;
     --color-background: #FAFAFA
 }
