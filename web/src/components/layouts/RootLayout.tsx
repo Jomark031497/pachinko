@@ -4,9 +4,11 @@ import { Navbar } from "~/components/layouts/Navbar";
 export const RootLayout = () => {
   return (
     <>
-      <div className="bg-background mx-auto min-h-screen max-w-md p-4">
+      <div className="bg-background mx-auto min-h-screen max-w-md">
         <Navbar />
-        <Outlet />
+        <main className="p-4">
+          <Outlet />
+        </main>
       </div>
     </>
   );
