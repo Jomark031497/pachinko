@@ -22,7 +22,7 @@ interface CreateAccountDialogProps {
   userId: Account["userId"];
 }
 
-export const CreateAccountDialog = ({ isOpen, onClose, userId }: CreateAccountDialogProps) => {
+const CreateAccountDialog = ({ isOpen, onClose, userId }: CreateAccountDialogProps) => {
   const {
     register,
     handleSubmit,
@@ -75,3 +75,5 @@ export const CreateAccountDialog = ({ isOpen, onClose, userId }: CreateAccountDi
     </Dialog>
   );
 };
+
+export default CreateAccountDialog;
