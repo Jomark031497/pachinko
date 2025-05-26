@@ -15,6 +15,23 @@ export const getUserAccounts = async (userId: Account["userId"]): Promise<Accoun
   return data;
 };
 
+export const getAccountById = async (id: Account["id"]): Promise<Account> => {
+  const url = new URL(`/api/accounts/${id}`, __API_URL__);
+
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+
+  return data;
+};
+
 export const createAccount = async (payload: CreateAccountInput): Promise<Account> => {
   const url = new URL(`/api/accounts/`, __API_URL__);
 
