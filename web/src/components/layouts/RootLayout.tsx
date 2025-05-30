@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 export const RootLayout = () => {
   return (
     <>
-      <div className="bg-background mx-auto min-h-screen max-w-md">
+      <div className="bg-background mx-auto min-h-screen max-w-md shadow">
         <Navbar />
         <main className="p-4">
           <Outlet />

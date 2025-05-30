@@ -1,14 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router";
-import { getAuthenticatedUser, loginUser, logoutUser } from "~/features/auth/auth.api";
-import type { User } from "~/features/auth/auth.types";
-import type { LoginCredentials } from "~/features/auth/routes/Login";
+import { getAuthenticatedUser, loginUser, logoutUser, signUpUser } from "~/features/auth/auth.api";
+import type { LoginInputs, SignUpInputs, User } from "~/features/auth/auth.schema";
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  handleLogin: (payload: LoginCredentials) => Promise<void>;
+  handleLogin: (payload: LoginInputs) => Promise<void>;
+  handleSignUp: (payload: SignUpInputs) => Promise<void>;
   handleLogout: () => Promise<void>;
 }
 
@@ -18,13 +18,23 @@ export const AuthProvider = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleLogin = async (payload: LoginCredentials) => {
+  const handleLogin = async (payload: LoginInputs) => {
     try {
       const userData = await loginUser(payload);
       setUser(userData);
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
       throw new Error("Login Failed");
+    }
+  };
+
+  const handleSignUp = async (payload: SignUpInputs) => {
+    try {
+      const userData = await signUpUser(payload);
+      setUser(userData);
+    } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
+      throw new Error("Sign Up Failed");
     }
   };
 
@@ -55,7 +65,7 @@ export const AuthProvider = () => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, handleLogin, handleLogout }}>
+    <AuthContext.Provider value={{ user, isLoading, handleLogin, handleSignUp, handleLogout }}>
       {!isLoading && <Outlet />}
     </AuthContext.Provider>
   );

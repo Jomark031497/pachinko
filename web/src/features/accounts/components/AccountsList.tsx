@@ -1,6 +1,6 @@
 import { AccountCard } from "~/features/accounts/components/AccountCard";
 import useUserAccounts from "~/features/accounts/hooks/useUserAccounts";
-import type { User } from "~/features/auth/auth.types";
+import type { User } from "~/features/auth/auth.schema";
 
 interface AccountsListProps {
   userId: User["id"];

@@ -1,6 +1,5 @@
 import { __API_URL__ } from "~/constants";
-import type { User } from "~/features/auth/auth.types";
-import type { LoginCredentials } from "~/features/auth/routes/Login";
+import type { LoginInputs, SignUpInputs, User } from "~/features/auth/auth.schema";
 
 export const getAuthenticatedUser = async (): Promise<User> => {
   const url = new URL("/api/auth/user", __API_URL__);
@@ -16,7 +15,7 @@ export const getAuthenticatedUser = async (): Promise<User> => {
   return data;
 };
 
-export const loginUser = async (payload: LoginCredentials): Promise<User> => {
+export const loginUser = async (payload: LoginInputs): Promise<User> => {
   const url = new URL("/api/auth/login", __API_URL__);
 
   const response = await fetch(url, {
@@ -44,6 +43,25 @@ export const logoutUser = async () => {
 
   const data = await response.json();
   if (!response.ok) throw new Error(data.message);
+
+  return data;
+};
+
+export const signUpUser = async (payload: SignUpInputs): Promise<User> => {
+  const url = new URL("/api/auth/sign-up", __API_URL__);
+
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) throw new Error(JSON.stringify(data));
 
   return data;
 };

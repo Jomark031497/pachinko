@@ -1,24 +1,11 @@
-import { z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "~/components/ui/Button";
 import { Input } from "~/components/ui/Input";
 import { useAuth } from "~/features/auth/hooks/useAuth";
-import { Navigate, useNavigate } from "react-router";
-
-const loginSchema = z.object({
-  username: z
-    .string()
-    .min(3, "username must be atleast 3 characters long")
-    .max(256, "username must not exceed 256 characters"),
-  password: z
-    .string()
-    .min(6, "password must be atleast 6 characters long")
-    .max(256, "password must not exceed 256 characters"),
-});
-
-export type LoginCredentials = z.infer<typeof loginSchema>;
+import { Link, Navigate, useNavigate } from "react-router";
+import { loginSchema, type LoginInputs } from "~/features/auth/auth.schema";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -30,13 +17,13 @@ export const Login = () => {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<LoginCredentials>({
+  } = useForm<LoginInputs>({
     resolver: zodResolver(loginSchema),
   });
 
   if (user) return <Navigate to="/" replace />;
 
-  const onSubmit: SubmitHandler<LoginCredentials> = async (values) => {
+  const onSubmit: SubmitHandler<LoginInputs> = async (values) => {
     try {
       await handleLogin(values);
       navigate("/");
@@ -59,6 +46,10 @@ export const Login = () => {
         <Button type="submit" className="self-center">
           Login
         </Button>
+
+        <p>
+          <Link to="/sign-up">Sign Up</Link>
+        </p>
       </form>
     </main>
   );

@@ -3,6 +3,7 @@ import { requireAuth } from "../../middleswares/require-auth.js";
 import {
   createTransactionHandler,
   deleteTransactionHandler,
+  getAllTransactionsByAccountIdHandler,
   getAllTransactionsByUserIdHandler,
   getTransactionByIdHandler,
   updateTransactionHandler,
@@ -12,7 +13,9 @@ import { insertTransactionSchema, updateTransactionSchema } from "./transactions
 
 const router = Router();
 
-router.get("/user/:userId", requireAuth, getAllTransactionsByUserIdHandler);
+router.get("/users/:userId", requireAuth, getAllTransactionsByUserIdHandler);
+
+router.get("/accounts/:accountId", requireAuth, getAllTransactionsByAccountIdHandler);
 
 router.get("/:id", requireAuth, getTransactionByIdHandler);
 

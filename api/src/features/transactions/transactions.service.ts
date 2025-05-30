@@ -31,12 +31,28 @@ export const createTransaction = async (payload: NewTransaction) => {
 };
 
 export const getAllTransactionsByUserId = async (userId: Transaction["userId"]) => {
-  return await db.select().from(transactions).where(eq(transactions.userId, userId));
+  return await db.query.transactions.findMany({
+    where: (transactions, { eq }) => eq(transactions.userId, userId),
+    with: {
+      category: true,
+      account: true,
+    },
+  });
 };
 
 export const getTransactionById = async (id: Transaction["id"]) => {
   const [transaction] = await db.select().from(transactions).where(eq(transactions.id, id)).limit(1);
   return transaction;
+};
+
+export const getAllTransactionsByAccountId = async (accountId: Transaction["accountId"]) => {
+  return await db.query.transactions.findMany({
+    where: (transactions, { eq }) => eq(transactions.accountId, accountId),
+    with: {
+      category: true,
+      account: true,
+    },
+  });
 };
 
 export const updateTransaction = async (id: Transaction["id"], payload: UpdateTransaction) => {
