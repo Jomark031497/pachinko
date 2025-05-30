@@ -60,7 +60,7 @@ export default function AccountsList({ userId }: AccountsListProps) {
 
   return (
     <>
-      <ul ref={listParent} className="flex flex-col gap-2">
+      <ul ref={listParent} className="mb-4 flex flex-col gap-2">
         {accounts.data.map((item) => (
           <li key={item.id}>
             <AccountCard account={item} />

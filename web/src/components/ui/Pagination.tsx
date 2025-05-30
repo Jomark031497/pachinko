@@ -14,7 +14,7 @@ const Pagination = ({ nextPage, page, prevPage, totalPages }: Props) => {
 
   return (
     <div className="flex justify-end">
-      <div className="mt-4 flex items-center gap-2">
+      <div className="flex items-center gap-2">
         <button
           className={cn(
             "cursor-pointer rounded px-2 font-semibold",

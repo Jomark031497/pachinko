@@ -3,7 +3,6 @@ import { Navigate } from "react-router";
 import { Button } from "~/components/ui/Button";
 import { useAuth } from "~/features/auth/hooks/useAuth";
 import { useToggle } from "~/hooks/useToggle";
-import { IoIosAddCircleOutline } from "react-icons/io";
 import AccountsList from "~/features/accounts/components/AccountsList";
 import UserTransactionsList from "~/features/transactions/components/UserTransactionList";
 
@@ -25,15 +24,10 @@ export const Dashboard = () => {
       <div className="flex flex-col gap-8">
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-500">accounts</h3>
+            <h3 className="font-semibold text-gray-500">Accounts</h3>
 
-            <Button
-              variant="outlined"
-              onClick={openCreateAccount}
-              className="flex items-center gap-1 px-2 py-1.5 text-sm"
-            >
-              add account
-              <IoIosAddCircleOutline size={20} />
+            <Button variant="outlined" onClick={openCreateAccount} className="px-2 py-1.5 text-sm">
+              Add Account
             </Button>
           </div>
 
@@ -42,9 +36,11 @@ export const Dashboard = () => {
 
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-500">Transactions</h3>
+            <h3 className="font-semibold text-gray-500">Recent Transactions</h3>
 
-            <Button onClick={openCreateTransaction}>Create Txn</Button>
+            <Button variant="outlined" onClick={openCreateTransaction} className="px-2 py-1.5 text-sm">
+              Create Transaction
+            </Button>
           </div>
 
           <UserTransactionsList userId={user.id} />

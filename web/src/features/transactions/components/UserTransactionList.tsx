@@ -16,7 +16,7 @@ const UserTransactionsList = ({ userId }: Props) => {
   if (!transactions || transactions.data.length === 0) return <p className="text-gray-500">No transactions found.</p>;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 rounded border border-gray-300 p-2 shadow">
       <Pagination nextPage={nextPage} page={page} prevPage={prevPage} totalPages={transactions.totalPages} />
       <TransactionsList transactions={transactions.data} />
     </div>
