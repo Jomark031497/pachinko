@@ -12,7 +12,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ label, error, .
       <input
         {...rest}
         ref={ref}
-        className="bg-background border-primary/50 hover:border-primary/80 focus:border-primary mt-0.5 block w-full rounded border-2 px-1.5 py-1 transition-all outline-none"
+        className="hover:border-primary-dark focus:border-primary mt-0.5 block w-full rounded border-2 px-1.5 py-1 transition-all outline-none"
       />
       {error && <p className="text-red-500">{error}</p>}
     </label>

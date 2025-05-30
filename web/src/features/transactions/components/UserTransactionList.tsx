@@ -13,7 +13,12 @@ const UserTransactionsList = ({ userId }: Props) => {
 
   if (isLoading) return <p className="text-sm text-gray-400">Loading transactions...</p>;
 
-  if (!transactions || transactions.data.length === 0) return <p className="text-gray-500">No transactions found.</p>;
+  if (!transactions || transactions.data.length === 0)
+    return (
+      <div className="rounded-md bg-gray-50 p-8 text-center text-gray-500">
+        <p>No transactions found.</p>
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-2 rounded border border-gray-300 p-2 shadow">
