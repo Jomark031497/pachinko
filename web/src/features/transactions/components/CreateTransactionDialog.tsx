@@ -1,17 +1,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Button } from "~/components/ui/Button";
 import { Dialog } from "~/components/ui/Dialog";
 import { Input } from "~/components/ui/Input";
 import { Select } from "~/components/ui/Select";
+import { __QUERY_KEYS__ } from "~/constants";
+import useUserAccounts from "~/features/accounts/hooks/useUserAccounts";
 import useUserCategories from "~/features/categories/hooks/useUserCategories";
+import { createTransaction } from "~/features/transactions/transactions.api";
 import {
   createTransactionSchema,
   TRANSACTION_TYPES,
   type CreateTransactionInput,
   type Transaction,
 } from "~/features/transactions/transactions.schema";
+import { queryClient } from "~/lib/queryClient";
 
 interface Props {
   isOpen: boolean;
@@ -23,23 +28,36 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors, isSubmitting },
   } = useForm<CreateTransactionInput>({
     resolver: zodResolver(createTransactionSchema),
     defaultValues: {
       type: "income",
+      userId,
+      transaction_date: new Date(),
     },
   });
 
   const transactionType = watch("type");
 
   const { data: categories } = useUserCategories(userId, transactionType);
+  const { data: accounts } = useUserAccounts(userId);
 
-  const mutation = useMutation({});
+  const mutation = useMutation({
+    mutationFn: (payload: CreateTransactionInput) => createTransaction(payload),
+    onSuccess: () => {
+      reset();
+      queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_ACCOUNTS] });
+      queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_TRANSACTIONS] });
+      toast.success("transaction created successfully");
+      onClose();
+    },
+  });
 
   const onSubmit: SubmitHandler<CreateTransactionInput> = (values) => {
-    console.log(values);
+    mutation.mutate(values);
   };
 
   return (
@@ -56,6 +74,14 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
           ))}
         </Select>
 
+        <Select label="Account" {...register("accountId")} error={errors.accountId?.message}>
+          {accounts?.data?.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.type} - {item.name}
+            </option>
+          ))}
+        </Select>
+
         <Select label="Category" {...register("categoryId")} error={errors.categoryId?.message}>
           {categories?.map((item) => (
             <option key={item.id} value={item.id}>
@@ -63,6 +89,15 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
             </option>
           ))}
         </Select>
+
+        <Input
+          type="date"
+          {...register("transaction_date", {
+            valueAsDate: true,
+          })}
+          label="Date"
+          error={errors.transaction_date?.message}
+        />
 
         <Button type="submit" disabled={mutation.isPending || isSubmitting}>
           Create

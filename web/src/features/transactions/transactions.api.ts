@@ -48,7 +48,10 @@ export const createTransaction = async (payload: CreateTransactionInput) => {
   const response = await fetch(url, {
     method: "POST",
     credentials: "include",
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      ...payload,
+      transaction_date: new Date(payload.transaction_date),
+    }),
     headers: {
       "Content-Type": "application/json",
     },
