@@ -12,7 +12,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ..
       ref={ref}
       className={cn(
         rest.className,
-        "bg-primary hover:bg-primary/80 cursor-pointer rounded px-8 py-1.5 font-semibold text-white transition-all",
+        "bg-primary hover:bg-primary/80 cursor-pointer rounded px-6 py-1 font-semibold text-white transition-all",
       )}
     >
       {children}

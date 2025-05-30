@@ -6,26 +6,13 @@ import type { Category } from "~/features/categories/categories.schema";
 export const TRANSACTION_TYPES = ["income", "expense", "transfer"] as const;
 
 export const createTransactionSchema = z.object({
-  accountId: z.string({ required_error: "Account is required." }).min(1, "Please select an account."),
-
-  categoryId: z.string({ required_error: "Category is required." }).min(1, "Please select a category."),
-  // If 'transfer' transactions should not have a category, you'll need conditional validation (see notes below)
-
-  name: z
-    .string({ required_error: "Transaction name is required." })
-    .min(1, "Transaction name cannot be empty.")
-    .max(255, "Transaction name cannot exceed 255 characters."),
-
-  type: z.enum(TRANSACTION_TYPES, {
-    required_error: "Transaction type is required.",
-    errorMap: (issue, ctx) => {
-      if (issue.code === "invalid_enum_value") {
-        return { message: "Invalid transaction type selected." };
-      }
-      return { message: ctx.defaultError };
-    },
-  }),
-
+  userId: z.string(),
+  accountId: z.string(),
+  categoryId: z.string(),
+  type: z.enum(TRANSACTION_TYPES),
+  transaction_date: z.date(),
+  description: z.string().optional(),
+  name: z.string(),
   amount: z
     .string({
       required_error: "Balance is required",
@@ -56,13 +43,9 @@ export const createTransactionSchema = z.object({
         return z.NEVER;
       }
 
+      // Convert to string with exactly 2 decimal places (e.g., "10" becomes "10.00")
       return num.toFixed(2);
     }),
-
-  description: z
-    .string()
-    .max(1000, "Description cannot exceed 1000 characters.") // Optional: Add a max length if desired
-    .optional(), // Corresponds to nullable text("description")
 });
 
 export type CreateTransactionInput = z.infer<typeof createTransactionSchema>;

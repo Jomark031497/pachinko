@@ -9,7 +9,7 @@ import {
 
 export const getAllCategoriesByUserIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await getAllCategoriesByUserId(<string>req.params.userId);
+    const data = await getAllCategoriesByUserId(<string>req.params.userId, req.query);
     res.status(200).json(data);
   } catch (error) {
     next(error);

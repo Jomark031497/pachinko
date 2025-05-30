@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { getAuthenticatedUser, loginUser, logoutUser, signUpUser } from "~/features/auth/auth.api";
 import type { LoginInputs, SignUpInputs, User } from "~/features/auth/auth.schema";
+import { ApiError } from "~/utils/errors";
 
 interface AuthContextType {
   user: User | null;
@@ -33,7 +34,7 @@ export const AuthProvider = () => {
       const userData = await signUpUser(payload);
       setUser(userData);
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
+      if (error instanceof ApiError) throw new ApiError(error.message, error.statusCode, error.details);
       throw new Error("Sign Up Failed");
     }
   };

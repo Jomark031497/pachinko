@@ -36,9 +36,12 @@ export const Login = () => {
   };
 
   return (
-    <main className="bg-background flex h-screen items-center justify-center rounded border p-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex w-md flex-col gap-4 bg-white p-4 shadow">
-        <h1 className="text-2xl">Login</h1>
+    <main className="bg-background flex h-screen items-center justify-center border p-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-md flex-col gap-4 rounded border border-gray-200 bg-white p-8 shadow"
+      >
+        <h1 className="text-primary text-2xl font-semibold">Login to Claremont</h1>
 
         <Input label="username" {...register("username")} error={errors.username?.message} />
         <Input label="password" type="password" {...register("password")} error={errors.password?.message} />
@@ -47,8 +50,11 @@ export const Login = () => {
           Login
         </Button>
 
-        <p>
-          <Link to="/sign-up">Sign Up</Link>
+        <p className="mt-4 text-center text-gray-500 italic">
+          no account yet?{" "}
+          <Link to="/sign-up" className="font-semibold text-blue-500">
+            sign up
+          </Link>
         </p>
       </form>
     </main>

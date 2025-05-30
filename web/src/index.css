@@ -1,9 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-    /* For buttons, links, headers */
-    --color-primary: #000;
-    /* For secondary buttons, hover states, accents */
-    --color-secondary: #CCC;
-    --color-background: #FAFAFA
+    /* Primary brand color: Trust, stability, main CTAs */
+    --color-primary: #3498DB;
+
+    /* Accent/Success color: Growth, income, positive indicators */
+    --color-accent-success: #2ECC71;
+
+    /* Warning/Danger color: Expenses, debt, alerts, destructive actions */
+    --color-warning-danger: #E74C3C;
+
+    /* Dark text/headings: High contrast for readability on light backgrounds */
+    --color-text-primary: #2C3E50;
+
+    /* Secondary text/labels: Softer contrast for less important info, disabled states */
+    --color-text-secondary: #7F8C8D;
+
+    /* Main background: Clean base for content areas */
+    --color-background-light: #F8F9FA;
+
+    /* Card/Input background: Pure white for contrast, especially for interactive elements */
+    --color-background-card: #FFFFFF;
+
+    /* Subtle borders/dividers: For separation without harshness */
+    --color-border: #E0E0E0;
+
+    /* Light hover/active state for primary elements */
+    --color-primary-light: #A9D9F8;
+
+    /* Darker active/hover state for primary elements */
+    --color-primary-dark: #287FB8;
 }

@@ -5,4 +5,5 @@ export const __QUERY_KEYS__ = {
   ACCOUNT: "account",
   ACCOUNT_TRANSACTIONS: "accountTransactions",
   USER_TRANSACTIONS: "userTransactions",
+  USER_CATEGORIES: "userCategories",
 };

@@ -1,5 +1,6 @@
 import { __API_URL__ } from "~/constants";
 import type { LoginInputs, SignUpInputs, User } from "~/features/auth/auth.schema";
+import { ApiError } from "~/utils/errors";
 
 export const getAuthenticatedUser = async (): Promise<User> => {
   const url = new URL("/api/auth/user", __API_URL__);
@@ -61,7 +62,7 @@ export const signUpUser = async (payload: SignUpInputs): Promise<User> => {
 
   const data = await response.json();
 
-  if (!response.ok) throw new Error(JSON.stringify(data));
+  if (!response.ok) throw new ApiError(data.message, response.status, data.errors);
 
   return data;
 };

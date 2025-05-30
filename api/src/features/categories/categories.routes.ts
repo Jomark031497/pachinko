@@ -12,7 +12,7 @@ import { insertCategoriesSchema, updateCategoriesSchema } from "./categories.sch
 
 const router = Router();
 
-router.get("/user/:userId", requireAuth, getAllCategoriesByUserIdHandler);
+router.get("/users/:userId", requireAuth, getAllCategoriesByUserIdHandler);
 router.get("/:id", requireAuth, getCategoryByIdHandler);
 
 router.post("/", requireAuth, validateSchema(insertCategoriesSchema), createCategoryHandler);

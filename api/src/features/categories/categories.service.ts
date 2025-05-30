@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "../../db/database.js";
 import { categories, Category, NewCategory } from "./categories.schema.js";
 import { AppError } from "../../utils/errors.js";
@@ -8,8 +8,13 @@ export const createCategory = async (payload: NewCategory) => {
   return newCategory;
 };
 
-export const getAllCategoriesByUserId = async (userId: Category["userId"]) => {
-  const allCategories = await db.select().from(categories).where(eq(categories.userId, userId));
+export const getAllCategoriesByUserId = async (userId: Category["userId"], queryParams: Record<string, unknown>) => {
+  const categoryType = (queryParams.type as Category["type"]) ?? null;
+
+  const allCategories = await db
+    .select()
+    .from(categories)
+    .where(and(eq(categories.userId, userId), categoryType ? eq(categories.type, categoryType) : undefined));
   return allCategories;
 };
 

@@ -7,11 +7,13 @@ import useTransactionsByUserId from "~/features/transactions/hooks/useTransactio
 import { useToggle } from "~/hooks/useToggle";
 
 const CreateAccountDialog = lazy(() => import("~/features/accounts/components/CreateAccountDialog"));
+const CreateTransactionDialog = lazy(() => import("~/features/transactions/components/CreateTransactionDialog"));
 const AccountsList = lazy(() => import("~/features/accounts/components/AccountsList"));
 
 export const Dashboard = () => {
   const { user, isLoading: isAuthLoading } = useAuth();
   const { open: openCreateAccount, close: closeCreateAccount, isOpen: isCreateAccountOpen } = useToggle();
+  const { open: openCreateTransaction, close: closeCreateTransaction, isOpen: isCreateTransactionOpen } = useToggle();
 
   const { data: transactions } = useTransactionsByUserId(user?.id || "");
 
@@ -40,7 +42,7 @@ export const Dashboard = () => {
           <div className="mb-4 flex items-center justify-between">
             <h3 className="font-semibold text-gray-500">Transactions</h3>
 
-            <Button onClick={openCreateAccount}>Create</Button>
+            <Button onClick={openCreateTransaction}>Create Txn</Button>
           </div>
 
           <Suspense fallback={<>Loading...</>}>
@@ -51,6 +53,10 @@ export const Dashboard = () => {
 
       <Suspense fallback={null}>
         <CreateAccountDialog isOpen={isCreateAccountOpen} onClose={closeCreateAccount} userId={user.id} />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <CreateTransactionDialog isOpen={isCreateTransactionOpen} onClose={closeCreateTransaction} userId={user.id} />
       </Suspense>
     </>
   );

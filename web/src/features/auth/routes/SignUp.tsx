@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/Button";
 import { Input } from "~/components/ui/Input";
 import { signUpSchema, type SignUpInputs } from "~/features/auth/auth.schema";
 import { useAuth } from "~/features/auth/hooks/useAuth";
+import { ApiError } from "~/utils/errors";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export const SignUp = () => {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm<SignUpInputs>({
     resolver: zodResolver(signUpSchema),
@@ -25,13 +27,21 @@ export const SignUp = () => {
   const mutation = useMutation({
     mutationFn: (payload: SignUpInputs) => handleSignUp(payload),
     onSuccess: () => {
-      toast.success("sign up success");
+      toast.success("Sign up successful!");
       reset();
       navigate("/");
     },
     onError: (error) => {
-      console.error("Failed to create user:", error);
-      toast.error("sign up failed");
+      if (error instanceof ApiError) {
+        // TODO: disgusting hack. sorry future me
+        Object.keys(error.details!).forEach((key) => {
+          const value = error.details![key];
+
+          setError(key as keyof SignUpInputs, {
+            message: value as string,
+          });
+        });
+      }
     },
   });
 
@@ -40,21 +50,26 @@ export const SignUp = () => {
   };
 
   return (
-    <main className="bg-background flex h-screen items-center justify-center rounded border p-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex w-md flex-col gap-4 bg-white p-4 shadow">
-        <h1 className="text-2xl">Sign Up</h1>
+    <main className="bg-background flex h-screen items-center justify-center border p-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-md flex-col gap-4 rounded border border-gray-200 bg-white p-8 shadow"
+      >
+        <h1 className="text-2xl font-semibold">Sign up to Claremont</h1>
 
         <Input label="username" {...register("username")} error={errors.username?.message} />
         <Input label="email" {...register("email")} error={errors.email?.message} />
-        <Input label="full name" {...register("fullName")} error={errors.fullName?.message} />
         <Input label="password" type="password" {...register("password")} error={errors.password?.message} />
 
         <Button type="submit" className="self-center">
           Sign Up
         </Button>
 
-        <p>
-          <Link to="/login">Login</Link>
+        <p className="mt-4 text-center text-gray-500 italic">
+          already have an account?{" "}
+          <Link to="/login" className="font-semibold text-blue-500">
+            login
+          </Link>
         </p>
       </form>
     </main>

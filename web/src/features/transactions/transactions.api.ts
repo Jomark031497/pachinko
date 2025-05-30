@@ -1,5 +1,9 @@
 import { __API_URL__ } from "~/constants";
-import type { Transaction, TransactionWithCategoryAndAccount } from "~/features/transactions/transactions.schema";
+import type {
+  CreateTransactionInput,
+  Transaction,
+  TransactionWithCategoryAndAccount,
+} from "~/features/transactions/transactions.schema";
 
 export const getAllTransactionsByAccountId = async (
   accountId: Transaction["accountId"],
@@ -31,4 +35,21 @@ export const getAllTransactionsByUserId = async (
   if (!response.ok) throw new Error(data.message);
 
   return data;
+};
+
+export const createTransaction = async (payload: CreateTransactionInput) => {
+  const url = new URL("/api/transactions", __API_URL__);
+
+  const response = await fetch(url, {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) throw new Error(data.message);
 };

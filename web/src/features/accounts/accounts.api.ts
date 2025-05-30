@@ -1,8 +1,15 @@
 import { __API_URL__ } from "~/constants";
 import type { Account, CreateAccountInput } from "~/features/accounts/accounts.schema";
+import type { Pagination } from "~/utils/utils.types";
 
-export const getUserAccounts = async (userId: Account["userId"]): Promise<Account[]> => {
+export const getUserAccounts = async (
+  userId: Account["userId"],
+  pagination?: Pagination,
+): Promise<{ data: Account[]; count: number; totalPages: number }> => {
   const url = new URL(`/api/accounts/user/${userId}`, __API_URL__);
+
+  if (pagination?.limit) url.searchParams.set("limit", pagination.limit.toString());
+  if (pagination?.offset) url.searchParams.set("offset", pagination.offset.toString());
 
   const response = await fetch(url, {
     method: "GET",
