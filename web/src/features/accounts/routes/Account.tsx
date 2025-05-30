@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { AccountCard } from "~/features/accounts/components/AccountCard";
+import AccountCard from "~/features/accounts/components/AccountCard";
 import useAccountById from "~/features/accounts/hooks/useAccountById";
 import TransactionsList from "~/features/transactions/components/TransactionsList";
 import useTransactionsByAccountId from "~/features/transactions/hooks/useTransactionsByAccountId";

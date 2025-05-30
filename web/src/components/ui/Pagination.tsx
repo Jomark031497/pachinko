@@ -19,7 +19,7 @@ const Pagination = ({ nextPage, page, prevPage, totalPages }: Props) => {
           className={cn(
             "cursor-pointer rounded px-2 font-semibold",
             hasPrevPage
-              ? "border border-gray-400 bg-gray-100 text-gray-400"
+              ? "border border-gray-200 bg-gray-100 text-gray-400"
               : "border border-gray-500 bg-white text-gray-500",
           )}
           disabled={hasPrevPage}
@@ -27,14 +27,14 @@ const Pagination = ({ nextPage, page, prevPage, totalPages }: Props) => {
         >
           {"<"}
         </button>
-        <span className="text-sm font-semibold text-gray-700">
+        <span className="text-sm font-semibold text-gray-500">
           page {page} of {totalPages}
         </span>
         <button
           className={cn(
             "cursor-pointer rounded px-2 font-semibold",
             hasNextPage
-              ? "border border-gray-400 bg-gray-100 text-gray-400"
+              ? "border border-gray-200 bg-gray-100 text-gray-400"
               : "border border-gray-500 bg-white text-gray-500",
           )}
           disabled={hasNextPage}

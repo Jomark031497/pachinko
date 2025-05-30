@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
+import AuthLayout from "~/components/layouts/AuthLayout";
 import { RootLayout } from "~/components/layouts/RootLayout";
 import { AuthProvider } from "~/contexts/auth";
 import Account from "~/features/accounts/routes/Account";
@@ -35,12 +36,17 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/sign-up",
-        element: <SignUp />,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/sign-up",
+            element: <SignUp />,
+          },
+        ],
       },
     ],
   },

@@ -36,7 +36,7 @@ export const Login = () => {
   };
 
   return (
-    <main className="bg-background flex h-screen items-center justify-center border p-4">
+    <>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-md flex-col gap-4 rounded border border-gray-200 bg-white p-8 shadow"
@@ -57,6 +57,6 @@ export const Login = () => {
           </Link>
         </p>
       </form>
-    </main>
+    </>
   );
 };

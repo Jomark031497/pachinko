@@ -3,19 +3,25 @@ import { cn } from "~/utils/utils";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
+  variant?: "contained" | "outlined";
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...rest }, ref) => {
-  return (
-    <button
-      {...rest}
-      ref={ref}
-      className={cn(
-        rest.className,
-        "bg-primary hover:bg-primary/80 cursor-pointer rounded px-6 py-1 font-semibold text-white transition-all",
-      )}
-    >
-      {children}
-    </button>
-  );
-});
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, variant = "contained", ...rest }, ref) => {
+    return (
+      <button
+        {...rest}
+        ref={ref}
+        className={cn(
+          variant === "contained"
+            ? "bg-primary border-primary hover:bg-primary-dark text-white"
+            : "border-primary text-primary bg-primary/10 hover:text-primary-dark hover:border-primary-dark",
+          "cursor-pointer rounded border-2 px-2 py-0.5 font-semibold transition-all",
+          rest.className,
+        )}
+      >
+        {children}
+      </button>
+    );
+  },
+);

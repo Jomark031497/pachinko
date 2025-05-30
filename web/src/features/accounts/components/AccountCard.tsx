@@ -6,15 +6,18 @@ interface AccountCardProps {
   account: Account;
 }
 
-export const AccountCard = ({ account }: AccountCardProps) => {
+const AccountCard = ({ account }: AccountCardProps) => {
   return (
     <Link to={`/accounts/${account.id}`}>
-      <div key={account.id} className="rounded border border-gray-200 bg-white p-2 shadow">
-        <p className="text-sm font-semibold">{account.name}</p>
-        <p className="text-sm text-gray-500 capitalize">{account.type}</p>
+      <div key={account.id} className="from-primary-dark to-primary rounded bg-gradient-to-r p-2 text-white shadow">
+        <p className="text-sm font-bold">{account.name}</p>
+        <p className="text-xs font-semibold text-gray-100 capitalize">{account.type}</p>
 
-        <p className="text-end font-semibold">{toCurrency(account.balance)}</p>
+        <p className="text-end text-xs">{account.type === "credit" ? "Oustanding Balance" : "Available Balance"}</p>
+        <p className="text-end text-sm font-semibold">{toCurrency(account.balance)}</p>
       </div>
     </Link>
   );
 };
+
+export default AccountCard;
