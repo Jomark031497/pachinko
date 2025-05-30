@@ -30,29 +30,63 @@ export const createTransaction = async (payload: NewTransaction) => {
   return newTransaction;
 };
 
-export const getAllTransactionsByUserId = async (userId: Transaction["userId"]) => {
-  return await db.query.transactions.findMany({
+export const getAllTransactionsByUserId = async (
+  userId: Transaction["userId"],
+  queryParams: Record<string, unknown>
+) => {
+  const limit = queryParams.limit ? Number(queryParams.limit) : 5; // default limit
+  const offset = queryParams.offset ? Number(queryParams.offset) : 0; // default offset
+
+  const transactionsQuery = await db.query.transactions.findMany({
     where: (transactions, { eq }) => eq(transactions.userId, userId),
     with: {
       category: true,
       account: true,
     },
+    limit,
+    offset,
   });
+
+  const countQuery = await db.$count(transactions, eq(transactions.userId, userId));
+  const totalPages = limit > 0 ? Math.ceil(countQuery / limit) : 1;
+
+  return {
+    data: transactionsQuery,
+    count: countQuery,
+    totalPages,
+  };
 };
 
-export const getTransactionById = async (id: Transaction["id"]) => {
-  const [transaction] = await db.select().from(transactions).where(eq(transactions.id, id)).limit(1);
-  return transaction;
-};
+export const getAllTransactionsByAccountId = async (
+  accountId: Transaction["accountId"],
+  queryParams: Record<string, unknown>
+) => {
+  const limit = queryParams.limit ? Number(queryParams.limit) : 5; // default limit
+  const offset = queryParams.offset ? Number(queryParams.offset) : 0; // default offset
 
-export const getAllTransactionsByAccountId = async (accountId: Transaction["accountId"]) => {
-  return await db.query.transactions.findMany({
+  const transactionsQuery = await db.query.transactions.findMany({
     where: (transactions, { eq }) => eq(transactions.accountId, accountId),
     with: {
       category: true,
       account: true,
     },
+    limit,
+    offset,
   });
+
+  const countQuery = await db.$count(transactions, eq(transactions.accountId, accountId));
+  const totalPages = limit > 0 ? Math.ceil(countQuery / limit) : 1;
+
+  return {
+    data: transactionsQuery,
+    count: countQuery,
+    totalPages,
+  };
+};
+
+export const getTransactionById = async (id: Transaction["id"]) => {
+  const [transaction] = await db.select().from(transactions).where(eq(transactions.id, id)).limit(1);
+  return transaction;
 };
 
 export const updateTransaction = async (id: Transaction["id"], payload: UpdateTransaction) => {

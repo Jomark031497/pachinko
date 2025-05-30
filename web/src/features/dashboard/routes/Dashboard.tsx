@@ -2,21 +2,19 @@ import { lazy, Suspense } from "react";
 import { Navigate } from "react-router";
 import { Button } from "~/components/ui/Button";
 import { useAuth } from "~/features/auth/hooks/useAuth";
-import TransactionsList from "~/features/transactions/components/TransactionsList";
-import useTransactionsByUserId from "~/features/transactions/hooks/useTransactionsByUserId";
 import { useToggle } from "~/hooks/useToggle";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import AccountsList from "~/features/accounts/components/AccountsList";
+import UserTransactionsList from "~/features/transactions/components/UserTransactionList";
 
 const CreateAccountDialog = lazy(() => import("~/features/accounts/components/CreateAccountDialog"));
 const CreateTransactionDialog = lazy(() => import("~/features/transactions/components/CreateTransactionDialog"));
 
 export const Dashboard = () => {
   const { user, isLoading: isAuthLoading } = useAuth();
+
   const { open: openCreateAccount, close: closeCreateAccount, isOpen: isCreateAccountOpen } = useToggle();
   const { open: openCreateTransaction, close: closeCreateTransaction, isOpen: isCreateTransactionOpen } = useToggle();
-
-  const { data: transactions } = useTransactionsByUserId(user?.id || "");
 
   if (isAuthLoading) return <div className="p-4 text-center text-gray-600">Loading user data...</div>;
 
@@ -49,7 +47,7 @@ export const Dashboard = () => {
             <Button onClick={openCreateTransaction}>Create Txn</Button>
           </div>
 
-          <TransactionsList transactions={transactions} />
+          <UserTransactionsList userId={user.id} />
         </section>
       </div>
 

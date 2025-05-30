@@ -4,6 +4,7 @@ import type {
   Transaction,
   TransactionWithCategoryAndAccount,
 } from "~/features/transactions/transactions.schema";
+import type { Pagination } from "~/utils/utils.types";
 
 export const getAllTransactionsByAccountId = async (
   accountId: Transaction["accountId"],
@@ -23,8 +24,12 @@ export const getAllTransactionsByAccountId = async (
 
 export const getAllTransactionsByUserId = async (
   userId: Transaction["userId"],
-): Promise<TransactionWithCategoryAndAccount[]> => {
+  pagination?: Pagination,
+): Promise<{ data: TransactionWithCategoryAndAccount[]; totalPages: number; count: number }> => {
   const url = new URL(`/api/transactions/users/${userId}`, __API_URL__);
+
+  if (pagination?.limit) url.searchParams.set("limit", pagination.limit.toString());
+  if (pagination?.offset) url.searchParams.set("offset", pagination.offset.toString());
 
   const response = await fetch(url, {
     method: "GET",

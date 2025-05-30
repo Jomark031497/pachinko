@@ -19,7 +19,7 @@ export const createTransactionHandler = async (req: Request, res: Response, next
 
 export const getAllTransactionsByUserIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await getAllTransactionsByUserId(<string>req.params.userId);
+    const data = await getAllTransactionsByUserId(<string>req.params.userId, req.query);
     res.status(200).json(data);
   } catch (error) {
     next(error);
@@ -37,7 +37,7 @@ export const getTransactionByIdHandler = async (req: Request, res: Response, nex
 
 export const getAllTransactionsByAccountIdHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await getAllTransactionsByAccountId(<string>req.params.accountId);
+    const data = await getAllTransactionsByAccountId(<string>req.params.accountId, req.query);
     res.status(200).json(data);
   } catch (error) {
     next(error);
