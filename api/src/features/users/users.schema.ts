@@ -15,8 +15,8 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 255 }).unique().notNull(),
   password: varchar("password", { length: 255 }).notNull(),
   fullName: varchar("full_name", { length: 255 }),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

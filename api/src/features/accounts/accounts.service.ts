@@ -14,13 +14,17 @@ export const getAccountById = async (id: Account["id"]) => {
 };
 
 export const getAllAccountsByUserId = async (userId: Account["userId"], queryParams: Record<string, unknown>) => {
-  const limit = queryParams.limit ? Number(queryParams.limit) : 5; // default limit
-  const offset = queryParams.offset ? Number(queryParams.offset) : 0; // default offset
+  const limit = queryParams.limit ? Number(queryParams.limit) : undefined; // default limit
+  const offset = queryParams.offset ? Number(queryParams.offset) : undefined; // default offset
 
-  const accountsQuery = await db.select().from(accounts).where(eq(accounts.userId, userId)).limit(limit).offset(offset);
+  const accountsQuery = await db.query.accounts.findMany({
+    where: (accounts, { eq }) => eq(accounts.userId, userId),
+    ...(limit !== undefined && { limit }),
+    ...(offset !== undefined && { offset }),
+  });
 
   const countQuery = await db.$count(accounts, eq(accounts.userId, userId));
-  const totalPages = limit > 0 ? Math.ceil(countQuery / limit) : 1;
+  const totalPages = !limit ? 0 : limit > 0 ? Math.ceil(countQuery / limit) : 1;
 
   return {
     data: accountsQuery,

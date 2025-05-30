@@ -20,8 +20,8 @@ export const accounts = pgTable("accounts", {
   userId: text("user_id")
     .notNull()
     .references(() => users.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),
 });
 
 export const accountsRelations = relations(accounts, ({ one, many }) => ({
