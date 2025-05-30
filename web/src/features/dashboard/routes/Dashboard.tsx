@@ -39,9 +39,7 @@ export const Dashboard = () => {
             </Button>
           </div>
 
-          <Suspense fallback={<>Loading...</>}>
-            <AccountsList userId={user.id} />
-          </Suspense>
+          <AccountsList userId={user.id} />
         </section>
 
         <section>
@@ -51,13 +49,13 @@ export const Dashboard = () => {
             <Button onClick={openCreateTransaction}>Create Txn</Button>
           </div>
 
-          <Suspense fallback={<>Loading...</>}>
-            <TransactionsList transactions={transactions} />
-          </Suspense>
+          <TransactionsList transactions={transactions} />
         </section>
       </div>
 
-      <CreateAccountDialog isOpen={isCreateAccountOpen} onClose={closeCreateAccount} userId={user.id} />
+      <Suspense fallback={null}>
+        <CreateAccountDialog isOpen={isCreateAccountOpen} onClose={closeCreateAccount} userId={user.id} />
+      </Suspense>
 
       <Suspense fallback={null}>
         <CreateTransactionDialog isOpen={isCreateTransactionOpen} onClose={closeCreateTransaction} userId={user.id} />

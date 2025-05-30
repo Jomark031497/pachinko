@@ -8,6 +8,7 @@ const useUserAccounts = (userId: Account["userId"], pagination?: Pagination) => 
   return useQuery({
     queryKey: [__QUERY_KEYS__.USER_ACCOUNTS, userId, pagination],
     queryFn: () => getUserAccounts(userId, pagination),
+    placeholderData: (prev) => prev,
   });
 };
 
