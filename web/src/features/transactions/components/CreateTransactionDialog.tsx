@@ -63,7 +63,7 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
   return (
     <Dialog title="Create Transaction" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <Input label="Name" {...register("name")} error={errors.name?.message} />
+        <Input label="Name" {...register("name")} error={errors.name?.message} autoFocus />
         <Input label="Amount" type="number" step="0.01" {...register("amount")} error={errors.amount?.message} />
 
         <Select label="Type" {...register("type")} error={errors.type?.message}>
