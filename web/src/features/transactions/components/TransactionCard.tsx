@@ -12,9 +12,9 @@ const TransactionCard = ({ transaction }: Props) => {
   return (
     <Link to={`/transactions/${transaction.id}`}>
       <div
-        className={"grid grid-cols-2 rounded border border-dashed border-gray-300 bg-white p-2 text-gray-500 shadow"}
+        className={"grid grid-cols-3 rounded border border-dashed border-gray-300 bg-white p-2 text-gray-500 shadow"}
       >
-        <p className="text-sm font-semibold">{transaction.name}</p>
+        <p className="col-span-2 text-sm font-semibold">{transaction.name}</p>
         <p
           className={cn(
             transaction.type === "income" ? "text-accent-green" : "text-accent-red",
@@ -23,9 +23,9 @@ const TransactionCard = ({ transaction }: Props) => {
         >
           {toCurrency(transaction.amount)}
         </p>
-        <p className="text-sm italic">{transaction.category.name}</p>
+        <p className="col-span-2 text-sm italic">{transaction.category.name}</p>
         <p className="text-right text-sm">{format(transaction.transaction_date, "MMM dd, yyyy")}</p>
-        <p className="text-sm">{transaction.account.name}</p>
+        <p className="col-span-2 text-sm">{transaction.account.name}</p>
         <p className="text-right text-sm">{transaction.account.type}</p>
       </div>
     </Link>

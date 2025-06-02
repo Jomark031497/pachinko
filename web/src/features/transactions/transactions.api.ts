@@ -8,8 +8,12 @@ import type { Pagination } from "~/utils/utils.types";
 
 export const getAllTransactionsByAccountId = async (
   accountId: Transaction["accountId"],
-): Promise<TransactionWithCategoryAndAccount[]> => {
+  pagination?: Pagination,
+): Promise<{ data: TransactionWithCategoryAndAccount[]; totalPages: number; count: number }> => {
   const url = new URL(`/api/transactions/accounts/${accountId}`, __API_URL__);
+
+  if (pagination?.limit) url.searchParams.set("limit", pagination.limit.toString());
+  if (pagination?.offset) url.searchParams.set("offset", pagination.offset.toString());
 
   const response = await fetch(url, {
     method: "GET",
