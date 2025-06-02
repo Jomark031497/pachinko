@@ -27,6 +27,8 @@ export const transactions = pgTable("transactions", {
   amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
   transaction_date: timestamp("transaction_date", { mode: "string", withTimezone: true }).notNull().defaultNow(),
   description: text("description"),
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),
 });
 
 export const transactionsRelations = relations(transactions, ({ one }) => ({
