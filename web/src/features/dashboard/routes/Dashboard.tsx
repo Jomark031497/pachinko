@@ -24,7 +24,7 @@ export const Dashboard = () => {
       <div className="flex flex-col gap-8">
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-500">Accounts</h3>
+            <h3 className="text-secondary font-semibold">Accounts</h3>
 
             <Button variant="outlined" onClick={openCreateAccount} className="px-2 py-1.5 text-sm">
               Add Account

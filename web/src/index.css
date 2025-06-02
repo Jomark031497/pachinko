@@ -5,10 +5,20 @@ body {
 }
 
 @theme {
-    --color-primary: #EA580C;
-    --color-primary-dark: #D94B05;
+    /* Primary Colors */
 
-    --color-secondary: #2563EB;
+    /* for action buttons, links, and key UI highlights*/
+    --color-primary: #2E7D32;
+    /* for backgrounds or hover states */
+    --color-primary-light: #A5D6A7;
+
+    --color-card: #E8F5E9;
+
+    /* Secondary Colors */
+
+    /* for headers, sidebars, or navigation */
+    --color-secondary: #1A237E;
+    --color-secondary-light: #64B5F6;
 
     --color-accent-red: #DC2626;
     --color-accent-green: #16A34A;
@@ -16,5 +26,5 @@ body {
     --color-heading: #374151;
     --color-sub-heading: #6B7280;
     --color-card: #F3F4F6;
-    --color-background: #eee;
+    --color-background: #F5F5F5;
 }

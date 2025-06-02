@@ -11,9 +11,14 @@ export default function Account() {
   if (!account) return <p>Account not found!</p>;
 
   return (
-    <>
-      <AccountCard account={account} />
+    <div className="flex flex-col gap-8">
+      <section>
+        <div className="mb-4">
+          <h1 className="font-semibold text-gray-500">Account</h1>
+        </div>
+        <AccountCard account={account} />
+      </section>
       <AccountTransactionsList accountId={account.id} />
-    </>
+    </div>
   );
 }

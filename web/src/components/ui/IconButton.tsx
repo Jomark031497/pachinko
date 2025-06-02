@@ -8,7 +8,7 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({ children, .
     <button
       {...rest}
       ref={ref}
-      className={cn(rest.className, "cursor-pointer rounded-full p-1 transition-all hover:bg-gray-300")}
+      className={cn("cursor-pointer rounded-full p-1.5 transition-all hover:bg-gray-200", rest.className)}
     >
       {children}
     </button>
