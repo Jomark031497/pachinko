@@ -12,7 +12,11 @@ const TransactionCard = ({ transaction }: Props) => {
   return (
     <Link to={`/transactions/${transaction.id}`}>
       <div
-        className={"grid grid-cols-3 rounded border border-dashed border-gray-300 bg-white p-2 text-gray-500 shadow"}
+        className={cn(
+          transaction.type === "income" ? "bg-accent-green/5" : "bg-accent-red/5",
+
+          "grid grid-cols-3 rounded border border-dashed border-gray-300 p-2 text-gray-500 shadow",
+        )}
       >
         <p className="col-span-2 text-sm font-semibold">{transaction.name}</p>
         <p

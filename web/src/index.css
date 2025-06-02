@@ -4,27 +4,19 @@ body {
     background: #ccc;
 }
 
+h3 {
+    letter-spacing: 1px;
+}
+
 @theme {
-    /* Primary Colors */
 
-    /* for action buttons, links, and key UI highlights*/
-    --color-primary: #2E7D32;
-    /* for backgrounds or hover states */
-    --color-primary-light: #A5D6A7;
+    --color-textPrimary: #040606;
+    --color-textSecondary: #495057;
+    --color-background: #e2eaee;
+    --color-primary: #5d6aa2;
+    --color-secondary: #d2cbe1;
+    --color-accent-green: #28A745;
+    --color-accent-red: #DC3545;
+    --color-accent-blue: #007BFF;
 
-    --color-card: #E8F5E9;
-
-    /* Secondary Colors */
-
-    /* for headers, sidebars, or navigation */
-    --color-secondary: #1A237E;
-    --color-secondary-light: #64B5F6;
-
-    --color-accent-red: #DC2626;
-    --color-accent-green: #16A34A;
-
-    --color-heading: #374151;
-    --color-sub-heading: #6B7280;
-    --color-card: #F3F4F6;
-    --color-background: #F5F5F5;
 }

@@ -24,10 +24,10 @@ export const Dashboard = () => {
       <div className="flex flex-col gap-8">
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-secondary font-semibold">Accounts</h3>
+            <h3 className="text-textSecondary text-lg font-semibold">accounts</h3>
 
-            <Button variant="outlined" onClick={openCreateAccount} className="px-2 py-1.5 text-sm">
-              Add Account
+            <Button onClick={openCreateAccount} className="px-2 py-1.5 text-xs">
+              add account
             </Button>
           </div>
 
@@ -36,10 +36,9 @@ export const Dashboard = () => {
 
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-500">Recent Transactions</h3>
-
-            <Button variant="outlined" onClick={openCreateTransaction} className="px-2 py-1.5 text-sm">
-              Create Transaction
+            <h3 className="text-textSecondary text-lg font-semibold">recent transactions</h3>
+            <Button onClick={openCreateTransaction} className="px-2 py-1.5 text-xs">
+              create transaction
             </Button>
           </div>
 

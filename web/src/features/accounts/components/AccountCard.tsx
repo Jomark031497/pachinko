@@ -9,9 +9,9 @@ interface AccountCardProps {
 const AccountCard = ({ account }: AccountCardProps) => {
   return (
     <Link to={`/accounts/${account.id}`}>
-      <div key={account.id} className="to-card/90 from-card rounded bg-gradient-to-r p-2 shadow">
+      <div key={account.id} className="text-textPrimary rounded bg-gradient-to-r from-white to-white p-2 shadow-md">
         <p className="text-sm font-bold">{account.name}</p>
-        <p className="text-xs font-semibold text-gray-100 capitalize">{account.type}</p>
+        <p className="text-xs font-semibold capitalize">{account.type}</p>
 
         <p className="text-end text-xs">{account.type === "credit" ? "Oustanding Balance" : "Available Balance"}</p>
         <p className="text-end text-sm font-semibold">{toCurrency(account.balance)}</p>
