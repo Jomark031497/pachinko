@@ -6,7 +6,7 @@ export const getUserAccounts = async (
   userId: Account["userId"],
   pagination?: Pagination,
 ): Promise<{ data: Account[]; count: number; totalPages: number }> => {
-  const url = new URL(`/api/accounts/user/${userId}`, __API_URL__);
+  const url = new URL(`/api/accounts/users/${userId}`, __API_URL__);
 
   if (pagination?.limit) url.searchParams.set("limit", pagination.limit.toString());
   if (pagination?.offset) url.searchParams.set("offset", pagination.offset.toString());
@@ -31,6 +31,24 @@ export const getAccountById = async (id: Account["id"]): Promise<Account> => {
     headers: {
       Accept: "application/json",
     },
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+
+  return data;
+};
+
+export const getSummaryForUser = async (
+  userId: Account["userId"],
+): Promise<{ income: string; expense: string; cashflow: string }> => {
+  const url = new URL(`/api/accounts/summary/users/${userId}`, __API_URL__);
+
+  url.searchParams.set("period", "this-month");
+
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include",
   });
 
   const data = await response.json();

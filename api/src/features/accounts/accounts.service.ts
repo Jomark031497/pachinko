@@ -1,9 +1,10 @@
-import { eq } from "drizzle-orm";
+import { and, between, eq, sum } from "drizzle-orm";
 import { db } from "../../db/database.js";
 import { Account, accounts, NewAccount, UpdateAccount } from "./accounts.schema.js";
 import { AppError } from "../../utils/errors.js";
 import { transactions } from "../transactions/transactions.schema.js";
 import { categories } from "../categories/categories.schema.js";
+import { getPeriodRange, Period } from "../../utils/periodRange.js";
 
 export const getAccountById = async (id: Account["id"]) => {
   const [account] = await db.select().from(accounts).where(eq(accounts.id, id)).limit(1);
@@ -31,6 +32,44 @@ export const getAllAccountsByUserId = async (userId: Account["userId"], queryPar
     data: accountsQuery,
     count: countQuery,
     totalPages,
+  };
+};
+
+export const getAccountSummaryForUser = async (userId: Account["userId"], period: Period) => {
+  const { start, end } = getPeriodRange(period);
+
+  const [incomeRes, expenseRes] = await Promise.all([
+    db
+      .select({ total: sum(transactions.amount) })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          eq(transactions.type, "income"),
+          between(transactions.createdAt, start.toISOString(), end.toISOString())
+        )
+      ),
+
+    db
+      .select({ total: sum(transactions.amount) })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.userId, userId),
+          eq(transactions.type, "expense"),
+          between(transactions.createdAt, start.toISOString(), end.toISOString())
+        )
+      ),
+  ]);
+
+  const income = incomeRes[0]?.total ?? "0";
+  const expense = expenseRes[0]?.total ?? "0";
+  const cashflow = parseFloat(income) - parseFloat(expense);
+
+  return {
+    income: incomeRes[0]?.total ?? 0,
+    expense: expenseRes[0]?.total ?? 0,
+    cashflow: cashflow.toFixed(2),
   };
 };
 

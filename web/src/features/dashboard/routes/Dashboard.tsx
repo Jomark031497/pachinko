@@ -5,12 +5,18 @@ import { useAuth } from "~/features/auth/hooks/useAuth";
 import { useToggle } from "~/hooks/useToggle";
 import AccountsList from "~/features/accounts/components/AccountsList";
 import UserTransactionsList from "~/features/transactions/components/UserTransactionList";
+import useSummaryForUser from "~/features/accounts/hooks/useAccountSummaryForUser";
+import { toCurrency } from "~/utils/toCurrency";
 
 const CreateAccountDialog = lazy(() => import("~/features/accounts/components/CreateAccountDialog"));
 const CreateTransactionDialog = lazy(() => import("~/features/transactions/components/CreateTransactionDialog"));
 
 export const Dashboard = () => {
   const { user, isLoading: isAuthLoading } = useAuth();
+
+  const { data: userSummary } = useSummaryForUser(user?.id ?? "");
+
+  console.log(userSummary);
 
   const { open: openCreateAccount, close: closeCreateAccount, isOpen: isCreateAccountOpen } = useToggle();
   const { open: openCreateTransaction, close: closeCreateTransaction, isOpen: isCreateTransactionOpen } = useToggle();
@@ -32,6 +38,21 @@ export const Dashboard = () => {
           </div>
 
           <AccountsList userId={user.id} />
+        </section>
+
+        <section className="flex items-center justify-center gap-4">
+          <div className="grow rounded border border-gray-500 p-4 text-center text-xs">
+            <p>Total Income</p>
+            <p>{toCurrency(userSummary?.income ?? "0")}</p>
+          </div>
+          <div className="grow rounded border border-gray-500 p-4 text-center text-xs">
+            <p>Total Expense</p>
+            <p>{toCurrency(userSummary?.expense ?? "0")}</p>
+          </div>
+          <div className="grow rounded border border-gray-500 p-4 text-center text-xs">
+            <p>Cashflow</p>
+            <p>{toCurrency(userSummary?.cashflow ?? "0")}</p>
+          </div>
         </section>
 
         <section>
