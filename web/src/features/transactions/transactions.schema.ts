@@ -48,7 +48,10 @@ export const createTransactionSchema = z.object({
     }),
 });
 
+export const updateTransactionSchema = createTransactionSchema.partial();
+
 export type CreateTransactionInput = z.infer<typeof createTransactionSchema>;
+export type UpdateTransactionInput = z.infer<typeof updateTransactionSchema>;
 
 export type Transaction = {
   id: string;

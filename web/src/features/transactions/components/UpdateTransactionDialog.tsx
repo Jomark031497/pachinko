@@ -11,62 +11,68 @@ import { Select } from "~/components/ui/Select";
 import { __QUERY_KEYS__ } from "~/constants";
 import useUserAccounts from "~/features/accounts/hooks/useUserAccounts";
 import useUserCategories from "~/features/categories/hooks/useUserCategories";
-import { createTransaction } from "~/features/transactions/transactions.api";
+import { updateTransaction } from "~/features/transactions/transactions.api";
 import {
-  createTransactionSchema,
   TRANSACTION_TYPES,
-  type CreateTransactionInput,
+  updateTransactionSchema,
   type Transaction,
+  type UpdateTransactionInput,
 } from "~/features/transactions/transactions.schema";
 import { queryClient } from "~/lib/queryClient";
 
-interface Props {
+interface UpdateTransactionDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  userId: Transaction["userId"];
+  transaction: Transaction;
 }
 
-const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
+const UpdateTransactionDialog = ({ isOpen, onClose, transaction }: UpdateTransactionDialogProps) => {
   const {
     register,
     handleSubmit,
-    reset,
     watch,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<CreateTransactionInput>({
-    resolver: zodResolver(createTransactionSchema),
+  } = useForm<UpdateTransactionInput>({
+    resolver: zodResolver(updateTransactionSchema),
     defaultValues: {
-      type: "income",
-      userId,
-      transaction_date: new Date(format(new Date(), "MM dd yyyy")),
+      accountId: transaction.accountId,
+      amount: transaction.amount,
+      categoryId: transaction.categoryId,
+      description: transaction.description ?? "",
+      name: transaction.name,
+      transaction_date: new Date(format(transaction.transaction_date, "MM/dd/yyyy")),
+      type: transaction.type ?? "income",
     },
   });
 
-  const transactionType = watch("type");
+  const transactionType = watch("type") ?? "income";
 
-  const { data: categories } = useUserCategories(userId, transactionType);
-  const { data: accounts } = useUserAccounts(userId);
+  const { data: categories } = useUserCategories(transaction.userId, transactionType);
+  const { data: accounts } = useUserAccounts(transaction.userId);
 
   const mutation = useMutation({
-    mutationFn: (payload: CreateTransactionInput) => createTransaction(payload),
+    mutationFn: (payload: UpdateTransactionInput) => updateTransaction(transaction.id, payload),
     onSuccess: () => {
-      reset();
-      queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_ACCOUNTS] });
-      queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_TRANSACTIONS] });
-      toast.success("transaction created successfully");
+      queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.TRANSACTION] });
       onClose();
+      toast.success("transaction updated successfully");
+    },
+    onError: (error) => {
+      console.error("Failed to update transaction:", error);
+      toast.error("update transaction failed");
     },
   });
 
-  const onSubmit: SubmitHandler<CreateTransactionInput> = (values) => {
-    mutation.mutate(values);
+  const onSubmit: SubmitHandler<UpdateTransactionInput> = (payload) => {
+    mutation.mutate(payload);
   };
 
   return (
-    <Dialog title="Create Transaction" isOpen={isOpen} onClose={onClose}>
+    <Dialog title="Update Transaction" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <Input label="Name" {...register("name")} error={errors.name?.message} autoFocus />
+
         <Input label="Amount" type="number" step="0.01" {...register("amount")} error={errors.amount?.message} />
 
         <Select label="Type" {...register("type")} error={errors.type?.message}>
@@ -93,6 +99,15 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
           ))}
         </Select>
 
+        {/* <Input
+          type="date"
+          {...register("transaction_date", {
+            valueAsDate: true,
+          })}
+          label="Date"
+          error={errors.transaction_date?.message}
+        /> */}
+
         <Controller
           control={control}
           name="transaction_date"
@@ -107,11 +122,11 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
         />
 
         <Button type="submit" disabled={mutation.isPending || isSubmitting}>
-          Create
+          Update
         </Button>
       </form>
     </Dialog>
   );
 };
 
-export default CreateTransactionDialog;
+export default UpdateTransactionDialog;

@@ -21,6 +21,7 @@ export const getAllAccountsByUserId = async (userId: Account["userId"], queryPar
     where: (accounts, { eq }) => eq(accounts.userId, userId),
     ...(limit !== undefined && { limit }),
     ...(offset !== undefined && { offset }),
+    orderBy: (accounts, { asc }) => [asc(accounts.name)],
   });
 
   const countQuery = await db.$count(accounts, eq(accounts.userId, userId));

@@ -45,7 +45,7 @@ export const getAllTransactionsByUserId = async (
     },
     limit,
     offset,
-    orderBy: (transactions, { desc }) => [desc(transactions.createdAt)],
+    orderBy: (transactions, { desc }) => [desc(transactions.transaction_date)],
   });
 
   const countQuery = await db.$count(transactions, eq(transactions.userId, userId));
@@ -73,7 +73,7 @@ export const getAllTransactionsByAccountId = async (
     },
     limit,
     offset,
-    orderBy: (transactions, { desc }) => [desc(transactions.createdAt)],
+    orderBy: (transactions, { desc }) => [desc(transactions.transaction_date)],
   });
 
   const countQuery = await db.$count(transactions, eq(transactions.accountId, accountId));
@@ -87,7 +87,14 @@ export const getAllTransactionsByAccountId = async (
 };
 
 export const getTransactionById = async (id: Transaction["id"]) => {
-  const [transaction] = await db.select().from(transactions).where(eq(transactions.id, id)).limit(1);
+  const transaction = await db.query.transactions.findFirst({
+    where: (transactions, { eq }) => eq(transactions.id, id),
+    with: {
+      category: true,
+      account: true,
+    },
+  });
+
   return transaction;
 };
 

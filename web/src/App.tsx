@@ -7,6 +7,7 @@ import { ProtectedRoute } from "~/features/auth/components/ProtectedRoute";
 import { Login } from "~/features/auth/routes/Login";
 import { SignUp } from "~/features/auth/routes/SignUp";
 import { Dashboard } from "~/features/dashboard/routes/Dashboard";
+import Transaction from "~/features/transactions/routes/Transaction";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,15 @@ const router = createBrowserRouter([
                   {
                     path: ":id",
                     element: <Account />,
+                  },
+                ],
+              },
+              {
+                path: "transactions",
+                children: [
+                  {
+                    path: ":id",
+                    element: <Transaction />,
                   },
                 ],
               },
