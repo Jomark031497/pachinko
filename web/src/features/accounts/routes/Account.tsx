@@ -7,9 +7,11 @@ import AccountTransactionsList from "~/features/transactions/components/AccountT
 import { MdEdit, MdDelete } from "react-icons/md";
 import { useToggle } from "~/hooks/useToggle";
 import { CgMoreVerticalO } from "react-icons/cg";
+import { Button } from "~/components/ui/Button";
 
 const UpdateAccountDialog = lazy(() => import("~/features/accounts/components/UpdateAccountDialog"));
 const DeleteAccountDialog = lazy(() => import("~/features/accounts/components/DeleteAccountDialog"));
+const CreateTransactionDialog = lazy(() => import("~/features/transactions/components/CreateTransactionDialog"));
 
 export default function Account() {
   const { id } = useParams();
@@ -19,6 +21,11 @@ export default function Account() {
 
   const { close: closeUpdateAccount, isOpen: isUpdateAccountOpen, open: openUpdateAccount } = useToggle(false);
   const { close: closeDeleteAccount, isOpen: isDeleteAccountOpen, open: openDeleteAccount } = useToggle(false);
+  const {
+    close: closeCreateTransaction,
+    isOpen: isCreateTransactionOpen,
+    open: openCreateTransaction,
+  } = useToggle(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -101,8 +108,15 @@ export default function Account() {
           <AccountCard account={account} />
         </section>
 
-        <section className="flex flex-col gap-4">
-          <h3 className="font-semibold text-gray-500">Recent Transactions</h3>
+        <section>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="font-semibold text-gray-500">Recent Transactions</h3>
+
+            <Button onClick={openCreateTransaction} className="px-2 py-1.5 text-xs">
+              create transaction
+            </Button>
+          </div>
+
           <AccountTransactionsList accountId={account.id} />
         </section>
       </div>
@@ -113,6 +127,15 @@ export default function Account() {
 
       <Suspense fallback={null}>
         <DeleteAccountDialog account={account} isOpen={isDeleteAccountOpen} onClose={closeDeleteAccount} />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <CreateTransactionDialog
+          isOpen={isCreateTransactionOpen}
+          onClose={closeCreateTransaction}
+          userId={account.userId}
+          accountId={account.id}
+        />
       </Suspense>
     </>
   );

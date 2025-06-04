@@ -24,9 +24,10 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   userId: Transaction["userId"];
+  accountId?: Transaction["accountId"];
 }
 
-const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
+const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) => {
   const {
     register,
     handleSubmit,
@@ -40,6 +41,7 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId }: Props) => {
       type: "income",
       userId,
       transaction_date: new Date(format(new Date(), "MM dd yyyy")),
+      accountId,
     },
   });
 
