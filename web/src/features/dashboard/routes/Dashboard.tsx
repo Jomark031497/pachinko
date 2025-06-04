@@ -43,15 +43,15 @@ export const Dashboard = () => {
         <section className="flex items-center justify-center gap-4">
           <div className="grow rounded border border-gray-500 p-4 text-center text-xs">
             <p>Total Income</p>
-            <p>{toCurrency(userSummary?.income ?? "0")}</p>
+            <p>{toCurrency(userSummary?.income ?? "0.00")}</p>
           </div>
           <div className="grow rounded border border-gray-500 p-4 text-center text-xs">
             <p>Total Expense</p>
-            <p>{toCurrency(userSummary?.expense ?? "0")}</p>
+            <p>{toCurrency(userSummary?.expense ?? "0.00")}</p>
           </div>
           <div className="grow rounded border border-gray-500 p-4 text-center text-xs">
             <p>Cashflow</p>
-            <p>{toCurrency(userSummary?.cashflow ?? "0")}</p>
+            <p>{toCurrency(userSummary?.cashflow ?? "0.00")}</p>
           </div>
         </section>
 
