@@ -21,7 +21,7 @@ const AccountTransactionsList = ({ accountId }: Props) => {
     );
 
   return (
-    <div className="flex flex-col gap-2 rounded border border-gray-300 p-2 shadow">
+    <div className="flex flex-col gap-2 rounded border border-gray-300 p-4 shadow">
       <Pagination nextPage={nextPage} page={page} prevPage={prevPage} totalPages={transactions.totalPages} />
       <TransactionsList transactions={transactions.data} />
     </div>

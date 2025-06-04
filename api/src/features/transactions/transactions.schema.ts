@@ -18,7 +18,7 @@ export const transactions = pgTable("transactions", {
     .references(() => users.id),
   accountId: text("account_id")
     .notNull()
-    .references(() => accounts.id),
+    .references(() => accounts.id, { onDelete: "cascade" }),
   categoryId: text("category_id")
     .notNull()
     .references(() => categories.id),

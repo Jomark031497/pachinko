@@ -1,5 +1,5 @@
 import { __API_URL__ } from "~/constants";
-import type { Account, CreateAccountInput } from "~/features/accounts/accounts.schema";
+import type { Account, CreateAccountInput, UpdateAccountInput } from "~/features/accounts/accounts.schema";
 import type { Pagination } from "~/utils/utils.types";
 
 export const getUserAccounts = async (
@@ -49,6 +49,38 @@ export const createAccount = async (payload: CreateAccountInput): Promise<Accoun
     headers: {
       "Content-Type": "application/json",
     },
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+
+  return data;
+};
+
+export const updateAccount = async (accountId: Account["id"], payload: UpdateAccountInput): Promise<Account> => {
+  const url = new URL(`/api/accounts/${accountId}`, __API_URL__);
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    credentials: "include",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+
+  return data;
+};
+
+export const deleteAccount = async (accountId: Account["id"]): Promise<{ message: string }> => {
+  const url = new URL(`/api/accounts/${accountId}`, __API_URL__);
+
+  const response = await fetch(url, {
+    method: "DELETE",
+    credentials: "include",
   });
 
   const data = await response.json();
