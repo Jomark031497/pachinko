@@ -4,7 +4,8 @@ import {
   deleteAccount,
   getAccountById,
   getAllAccountsByUserId,
-  getAccountSummaryForUser,
+  getSummaryForAccount,
+  getSummaryForUser,
   updateAccount,
 } from "./accounts.service.js";
 import { Period } from "../../utils/periodRange.js";
@@ -27,9 +28,18 @@ export const getAccountByIdHandler = async (req: Request, res: Response, next: N
   }
 };
 
-export const getAccountSummaryForUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const getSummaryForUserHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await getAccountSummaryForUser(<string>req.params.userId, req.query.period as Period);
+    const data = await getSummaryForUser(<string>req.params.userId, req.query.period as Period);
+    res.status(200).json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSummaryForAccountHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = await getSummaryForAccount(<string>req.params.id, req.query.period as Period);
     res.status(200).json(data);
   } catch (error) {
     next(error);

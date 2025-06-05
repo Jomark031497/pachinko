@@ -58,6 +58,25 @@ export const getSummaryForUser = async (
   return data;
 };
 
+export const getSummaryForAccount = async (
+  accountId: Account["id"],
+  period?: Period,
+): Promise<{ income: string; expense: string; cashflow: string }> => {
+  const url = new URL(`/api/accounts/summary/accounts/${accountId}`, __API_URL__);
+
+  if (period) url.searchParams.set("period", period);
+
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message);
+
+  return data;
+};
+
 export const createAccount = async (payload: CreateAccountInput): Promise<Account> => {
   const url = new URL(`/api/accounts/`, __API_URL__);
 

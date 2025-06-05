@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import IconButton from "~/components/ui/IconButton";
 import AccountCard from "~/features/accounts/components/AccountCard";
@@ -8,6 +8,9 @@ import { MdEdit, MdDelete } from "react-icons/md";
 import { useToggle } from "~/hooks/useToggle";
 import { CgMoreVerticalO } from "react-icons/cg";
 import { Button } from "~/components/ui/Button";
+import { Select } from "~/components/ui/Select";
+import type { Period } from "~/features/accounts/accounts.schema";
+import AccountSummary from "~/features/accounts/components/AccountSummary";
 
 const UpdateAccountDialog = lazy(() => import("~/features/accounts/components/UpdateAccountDialog"));
 const DeleteAccountDialog = lazy(() => import("~/features/accounts/components/DeleteAccountDialog"));
@@ -18,6 +21,8 @@ export default function Account() {
   const { data: account } = useAccountById(id as string);
   const { close: closeMenu, isOpen: isMenuOpen, toggle: toggleMenu } = useToggle(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const [period, setPeriod] = useState<Period>("this-week");
 
   const { close: closeUpdateAccount, isOpen: isUpdateAccountOpen, open: openUpdateAccount } = useToggle(false);
   const { close: closeDeleteAccount, isOpen: isDeleteAccountOpen, open: openDeleteAccount } = useToggle(false);
@@ -106,6 +111,20 @@ export default function Account() {
           </div>
 
           <AccountCard account={account} />
+        </section>
+
+        <section>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-textSecondary text-lg font-semibold">summary</h3>
+
+            <Select value={period} onChange={(e) => setPeriod(e.target.value as Period)} className="px-4">
+              <option value="this-week">This Week</option>
+              <option value="this-month">This Month</option>
+              <option value="this-year">This Year</option>
+            </Select>
+          </div>
+
+          <AccountSummary accountId={account.id} period={period} />
         </section>
 
         <section>

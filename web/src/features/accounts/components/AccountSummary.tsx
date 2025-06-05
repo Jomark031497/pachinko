@@ -1,14 +1,13 @@
-import type { Period } from "~/features/accounts/accounts.schema";
-import useSummaryForUser from "~/features/accounts/hooks/useSummaryForUser";
-import type { User } from "~/features/auth/auth.schema";
+import type { Account, Period } from "~/features/accounts/accounts.schema";
+import useSummaryForAccount from "~/features/accounts/hooks/useSummaryForAccounts";
 import { toCurrency } from "~/utils/toCurrency";
 
-interface UserSummaryProps {
-  userId: User["id"];
+interface AccountSummaryProps {
+  accountId: Account["id"];
   period?: Period;
 }
 
-const UserSummarySkeleton = () => {
+const AccountSummarySkeleton = () => {
   return (
     <div className="flex items-center justify-center gap-2">
       <div className="grow animate-pulse rounded border-gray-300 bg-gray-200 p-4 text-center shadow-lg">
@@ -27,10 +26,10 @@ const UserSummarySkeleton = () => {
   );
 };
 
-const UserSummary = ({ userId, period }: UserSummaryProps) => {
-  const { data: userSummary, isLoading } = useSummaryForUser(userId, period);
+const AccountSummary = ({ accountId, period }: AccountSummaryProps) => {
+  const { data: userSummary, isLoading } = useSummaryForAccount(accountId, period);
 
-  if (isLoading) return <UserSummarySkeleton />;
+  if (isLoading) return <AccountSummarySkeleton />;
 
   if (!userSummary) return <p>unable to render userSummary</p>;
 
@@ -52,4 +51,4 @@ const UserSummary = ({ userId, period }: UserSummaryProps) => {
   );
 };
 
-export default UserSummary;
+export default AccountSummary;

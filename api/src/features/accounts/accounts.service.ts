@@ -35,7 +35,7 @@ export const getAllAccountsByUserId = async (userId: Account["userId"], queryPar
   };
 };
 
-export const getAccountSummaryForUser = async (userId: Account["userId"], period: Period) => {
+export const getSummaryForUser = async (userId: Account["userId"], period: Period) => {
   const { start, end } = getPeriodRange(period);
 
   const [incomeRes, expenseRes] = await Promise.all([
@@ -56,6 +56,44 @@ export const getAccountSummaryForUser = async (userId: Account["userId"], period
       .where(
         and(
           eq(transactions.userId, userId),
+          eq(transactions.type, "expense"),
+          between(transactions.transaction_date, start.toISOString(), end.toISOString())
+        )
+      ),
+  ]);
+
+  const income = incomeRes[0]?.total ?? "0";
+  const expense = expenseRes[0]?.total ?? "0";
+  const cashflow = parseFloat(income) - parseFloat(expense);
+
+  return {
+    income: incomeRes[0]?.total ?? 0,
+    expense: expenseRes[0]?.total ?? 0,
+    cashflow: cashflow.toFixed(2),
+  };
+};
+
+export const getSummaryForAccount = async (accountId: Account["id"], period: Period) => {
+  const { start, end } = getPeriodRange(period);
+
+  const [incomeRes, expenseRes] = await Promise.all([
+    db
+      .select({ total: sum(transactions.amount) })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.accountId, accountId),
+          eq(transactions.type, "income"),
+          between(transactions.transaction_date, start.toISOString(), end.toISOString())
+        )
+      ),
+
+    db
+      .select({ total: sum(transactions.amount) })
+      .from(transactions)
+      .where(
+        and(
+          eq(transactions.accountId, accountId),
           eq(transactions.type, "expense"),
           between(transactions.transaction_date, start.toISOString(), end.toISOString())
         )

@@ -7,7 +7,8 @@ import {
   deleteAccountHandler,
   getAccountByIdHandler,
   getAllAccountsByUserHandler,
-  getAccountSummaryForUserHandler,
+  getSummaryForAccountHandler,
+  getSummaryForUserHandler,
   updateAccountHandler,
 } from "./accounts.controller.js";
 
@@ -17,7 +18,8 @@ router.get("/:id", requireAuth, getAccountByIdHandler);
 
 router.get("/users/:userId", requireAuth, getAllAccountsByUserHandler);
 
-router.get("/summary/users/:userId", requireAuth, getAccountSummaryForUserHandler);
+router.get("/summary/users/:userId", requireAuth, getSummaryForUserHandler);
+router.get("/summary/accounts/:id", requireAuth, getSummaryForAccountHandler);
 
 router.post("/", requireAuth, validateSchema(insertAccountsSchema), createAccountHandler);
 
