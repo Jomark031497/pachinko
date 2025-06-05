@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const ACCOUNT_TYPE = ["checking", "savings", "credit", "cash"] as const;
 
+export type Period = "this-week" | "this-month" | "this-year";
+
 export interface Account {
   id: string;
   name: string;
@@ -20,10 +22,8 @@ export const createAccountSchema = z.object({
     .string({
       required_error: "Balance is required",
     })
-    .trim() // Removes leading/trailing whitespace
+    .trim()
     .refine((val) => {
-      // Regex: Optional negative sign, digits, then optional decimal with 1 or 2 digits.
-      // Or just a single '0'
       const regex = /^-?\d+(\.\d{1,2})?$|^0$/;
       return regex.test(val);
     }, "Please enter a valid number with up to 2 decimal places.")
@@ -31,7 +31,6 @@ export const createAccountSchema = z.object({
       const num = parseFloat(val);
 
       if (isNaN(num)) {
-        // This should ideally be caught by the refine, but good as a fallback
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "Balance must be a valid number.",
@@ -45,8 +44,6 @@ export const createAccountSchema = z.object({
         });
         return z.NEVER;
       }
-
-      // Convert to string with exactly 2 decimal places (e.g., "10" becomes "10.00")
       return num.toFixed(2);
     }),
 });

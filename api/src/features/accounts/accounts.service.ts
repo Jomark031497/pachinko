@@ -46,7 +46,7 @@ export const getAccountSummaryForUser = async (userId: Account["userId"], period
         and(
           eq(transactions.userId, userId),
           eq(transactions.type, "income"),
-          between(transactions.createdAt, start.toISOString(), end.toISOString())
+          between(transactions.transaction_date, start.toISOString(), end.toISOString())
         )
       ),
 
@@ -57,7 +57,7 @@ export const getAccountSummaryForUser = async (userId: Account["userId"], period
         and(
           eq(transactions.userId, userId),
           eq(transactions.type, "expense"),
-          between(transactions.createdAt, start.toISOString(), end.toISOString())
+          between(transactions.transaction_date, start.toISOString(), end.toISOString())
         )
       ),
   ]);

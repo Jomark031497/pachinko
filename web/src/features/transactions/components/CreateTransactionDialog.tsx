@@ -56,6 +56,8 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
       reset();
       queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_ACCOUNTS] });
       queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_TRANSACTIONS] });
+      queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_SUMMARY] });
+
       toast.success("transaction created successfully");
       onClose();
     },

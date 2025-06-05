@@ -1,5 +1,5 @@
 import { __API_URL__ } from "~/constants";
-import type { Account, CreateAccountInput, UpdateAccountInput } from "~/features/accounts/accounts.schema";
+import type { Account, CreateAccountInput, Period, UpdateAccountInput } from "~/features/accounts/accounts.schema";
 import type { Pagination } from "~/utils/utils.types";
 
 export const getUserAccounts = async (
@@ -41,10 +41,11 @@ export const getAccountById = async (id: Account["id"]): Promise<Account> => {
 
 export const getSummaryForUser = async (
   userId: Account["userId"],
+  period?: Period,
 ): Promise<{ income: string; expense: string; cashflow: string }> => {
   const url = new URL(`/api/accounts/summary/users/${userId}`, __API_URL__);
 
-  url.searchParams.set("period", "this-month");
+  if (period) url.searchParams.set("period", period);
 
   const response = await fetch(url, {
     method: "GET",

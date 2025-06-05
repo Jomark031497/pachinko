@@ -41,6 +41,8 @@ const CreateAccountDialog = ({ isOpen, onClose, userId }: CreateAccountDialogPro
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_ACCOUNTS] });
       queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_TRANSACTIONS] });
+      queryClient.invalidateQueries({ queryKey: [__QUERY_KEYS__.USER_SUMMARY] });
+
       onClose();
       reset();
       toast.success("account created successfully");
