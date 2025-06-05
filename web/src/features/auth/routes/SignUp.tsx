@@ -55,7 +55,7 @@ export const SignUp = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-md flex-col gap-4 rounded border border-gray-200 bg-white p-8 shadow"
       >
-        <h1 className="text-2xl font-semibold">Sign up to Claremont</h1>
+        <h1 className="text-2xl font-semibold">sign up to pachinko</h1>
 
         <Input label="username" {...register("username")} error={errors.username?.message} />
         <Input label="email" {...register("email")} error={errors.email?.message} />

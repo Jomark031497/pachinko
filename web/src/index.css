@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-    background: #ccc;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 h3 {
@@ -9,7 +9,6 @@ h3 {
 }
 
 @theme {
-
     --color-textPrimary: #040606;
     --color-textSecondary: #495057;
     --color-background: #e2eaee;
@@ -18,5 +17,5 @@ h3 {
     --color-accent-green: #28A745;
     --color-accent-red: #DC3545;
     --color-accent-blue: #007BFF;
-
+    --color-card-bg: #ccc
 }

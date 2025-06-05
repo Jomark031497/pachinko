@@ -41,7 +41,7 @@ export const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-md flex-col gap-4 rounded border border-gray-200 bg-white p-8 shadow"
       >
-        <h1 className="text-primary text-2xl font-semibold">Login to Claremont</h1>
+        <h1 className="text-primary text-2xl font-semibold">login to pachinko</h1>
 
         <Input label="username" {...register("username")} error={errors.username?.message} />
         <Input label="password" type="password" {...register("password")} error={errors.password?.message} />
