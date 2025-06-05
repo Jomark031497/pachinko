@@ -6,6 +6,10 @@ import { accounts } from "../accounts/accounts.schema.js";
 
 export const createTransaction = async (payload: NewTransaction) => {
   const newTransaction = await db.transaction(async (tx) => {
+    if (payload.type === "transfer" && payload.transferAccountId) {
+      // Get the accounts involved, source account (accountId) and destination account (transferAccountId)
+    }
+
     // create transaction
     const [newTransaction] = await tx.insert(transactions).values(payload).returning();
 
