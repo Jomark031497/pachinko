@@ -9,6 +9,7 @@ export const createTransactionSchema = z.object({
   userId: z.string(),
   accountId: z.string(),
   categoryId: z.string(),
+  transferAccountId: z.string().optional(),
   type: z.enum(TRANSACTION_TYPES),
   transaction_date: z.date(),
   description: z.string().optional(),
@@ -58,6 +59,7 @@ export type Transaction = {
   userId: string;
   accountId: string;
   categoryId: string;
+  transferAccountId: string;
   name: string;
   type: "income" | "expense" | "transfer";
   amount: string;

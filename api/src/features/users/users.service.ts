@@ -5,7 +5,6 @@ import { AppError } from "../../utils/errors.js";
 import { hash } from "argon2";
 import { categories, NewCategory } from "../categories/categories.schema.js";
 import { defaultCategories } from "../categories/categories.utils.js";
-import { createTransaction } from "../transactions/transactions.service.js";
 
 export const getUser = async (field: keyof User, value: string) => {
   const [user] = await db.select().from(users).where(eq(users[field], value)).limit(1);

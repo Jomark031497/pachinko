@@ -23,4 +23,5 @@ export const defaultCategories: Pick<Category, "name" | "type">[] = [
   { name: "Gifts", type: "income" },
   { name: "Rental Income", type: "income" },
   { name: "Other", type: "income" },
+  { name: "Transfer", type: "transfer" },
 ];
