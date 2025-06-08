@@ -5,6 +5,7 @@ import { AppError } from "../../utils/errors.js";
 import { hash } from "argon2";
 import { categories, NewCategory } from "../categories/categories.schema.js";
 import { defaultCategories } from "../categories/categories.utils.js";
+import { excludeFields } from "../../utils/exclude-fields.js";
 
 export const getUser = async (field: keyof User, value: string) => {
   const [user] = await db.select().from(users).where(eq(users[field], value)).limit(1);
@@ -51,4 +52,19 @@ export const createUser = async (payload: NewUser) => {
   });
 
   return user;
+};
+
+export const updateUser = async (userId: User["id"], payload: Partial<NewUser>) => {
+  if (payload.username || payload.email)
+    throw new AppError(400, "You can't change username or email, please contact administrator");
+
+  const [updatedUser] = await db
+    .update(users)
+    .set({ fullName: payload.fullName, currency: payload.currency })
+    .where(eq(users.id, userId))
+    .returning();
+
+  if (!updatedUser) throw new AppError(400, "update user failed");
+
+  return excludeFields(updatedUser, ["password"]);
 };
