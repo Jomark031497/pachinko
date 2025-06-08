@@ -9,7 +9,7 @@ interface AccountCardProps {
 const AccountCard = ({ account }: AccountCardProps) => {
   return (
     <Link to={`/accounts/${account.id}`}>
-      <div key={account.id} className="text-textPrimary rounded bg-gradient-to-r from-white to-white p-2 shadow-md">
+      <div key={account.id} className="text-textPrimary bg-card-bg rounded p-2 shadow-md">
         <p className="text-sm font-bold">{account.name}</p>
         <p className="text-xs font-semibold capitalize">{account.type}</p>
 

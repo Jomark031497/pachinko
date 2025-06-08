@@ -6,14 +6,40 @@ import { accounts } from "../accounts/accounts.schema.js";
 
 export const createTransaction = async (payload: NewTransaction) => {
   const newTransaction = await db.transaction(async (tx) => {
-    // create transaction
-    const [newTransaction] = await tx.insert(transactions).values(payload).returning();
-
     // get account
     const [account] = await tx.select().from(accounts).where(eq(accounts.id, payload.accountId)).limit(1);
     if (!account) throw new AppError(404, "Account not found");
 
     const amount = Number(payload.amount);
+    const accountBalance = Number(account.balance);
+
+    if (payload.type === "transfer") {
+      if (payload.accountId === payload.transferAccountId)
+        throw new AppError(400, "You can't transfer to the same account");
+
+      if (!payload.transferAccountId) throw new AppError(400, "Missing destination account for transfer");
+      const [destinationAccount] = await tx.select().from(accounts).where(eq(accounts.id, payload.transferAccountId));
+      if (!destinationAccount) throw new AppError(404, "Destination account not found");
+
+      const [transaction] = await tx.insert(transactions).values(payload).returning();
+
+      // update balances
+      await tx
+        .update(accounts)
+        .set({ balance: (accountBalance - amount).toFixed(2) })
+        .where(eq(accounts.id, account.id));
+
+      await tx
+        .update(accounts)
+        .set({ balance: (Number(destinationAccount.balance) + amount).toFixed(2) })
+        .where(eq(accounts.id, payload.transferAccountId));
+
+      return transaction;
+    }
+
+    // create transaction
+    const [newTransaction] = await tx.insert(transactions).values(payload).returning();
+
     const currentBalance = Number(account.balance);
 
     const newBalance = payload.type === "income" ? currentBalance + amount : currentBalance - amount;
