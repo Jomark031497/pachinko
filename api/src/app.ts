@@ -27,8 +27,8 @@ export const createApp = () => {
     session({
       store: new PgSession({
         pool: pool,
-        tableName: "session", // Default table name
-        createTableIfMissing: true, // Optional: auto-create the table
+        tableName: "session",
+        createTableIfMissing: true,
       }),
       secret: envs.SECRET_KEY,
       name: __COOKIE_NAME__,
@@ -36,8 +36,8 @@ export const createApp = () => {
       resave: false,
       cookie: {
         httpOnly: true,
-        maxAge: 3600000 * 24, // 1 day
-        secure: __IS_PROD__, // HTTPS-only in production
+        maxAge: 3600000 * 24,
+        secure: __IS_PROD__,
       },
     })
   );
