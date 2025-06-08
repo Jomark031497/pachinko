@@ -1,14 +1,5 @@
 import { z } from "zod";
 
-export interface User {
-  id: string;
-  username: string;
-  email: string;
-  fullName: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export const loginSchema = z.object({
   username: z
     .string()
@@ -19,8 +10,6 @@ export const loginSchema = z.object({
     .min(6, "password must be atleast 6 characters long")
     .max(256, "password must not exceed 256 characters"),
 });
-
-export type LoginInputs = z.infer<typeof loginSchema>;
 
 export const signUpSchema = z.object({
   email: z
@@ -39,4 +28,5 @@ export const signUpSchema = z.object({
   fullName: z.string().max(256, "full name must not exceed 256 characters").optional(),
 });
 
+export type LoginInputs = z.infer<typeof loginSchema>;
 export type SignUpInputs = z.infer<typeof signUpSchema>;

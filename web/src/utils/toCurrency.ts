@@ -1,15 +1,21 @@
-export const toCurrency = (value: string) => {
-  if (isNaN(parseInt(value))) throw new Error("Invalid nubmer");
+const currencyToLocale: Record<string, string> = {
+  PHP: "en-PH",
+  USD: "en-US",
+  EUR: "de-DE",
+  JPY: "ja-JP",
+  AUD: "en-AU",
+  GBP: "en-GB",
+};
 
-  // Create our number formatter.
-  const formatter = new Intl.NumberFormat("en-PH", {
+export const toCurrency = (value: string | number, currency: string = "PHP") => {
+  const num = typeof value === "string" ? parseFloat(value) : value;
+
+  if (isNaN(num)) throw new Error("Invalid number");
+
+  const locale = currencyToLocale[currency] || "en-US"; // fallback to en-US
+
+  return new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: "PHP",
-
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-  });
-
-  return formatter.format(parseInt(value));
+    currency,
+  }).format(num);
 };

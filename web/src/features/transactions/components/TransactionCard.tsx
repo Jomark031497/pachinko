@@ -3,12 +3,15 @@ import type { TransactionWithCategoryAndAccount } from "~/features/transactions/
 import { toCurrency } from "~/utils/toCurrency";
 import { format } from "date-fns";
 import { cn } from "~/utils/utils";
+import { useAuth } from "~/features/auth/hooks/useAuth";
 
 interface Props {
   transaction: TransactionWithCategoryAndAccount;
 }
 
 const TransactionCard = ({ transaction }: Props) => {
+  const { user } = useAuth();
+
   return (
     <Link to={`/transactions/${transaction.id}`}>
       <div
@@ -25,7 +28,7 @@ const TransactionCard = ({ transaction }: Props) => {
             "text-right text-sm font-semibold",
           )}
         >
-          {toCurrency(transaction.amount)}
+          {toCurrency(transaction.amount, user?.currency)}
         </p>
         <p className="col-span-2 text-sm italic">{transaction.category.name}</p>
         <p className="text-right text-sm">{format(transaction.transaction_date, "MMM dd, yyyy")}</p>

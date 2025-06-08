@@ -8,6 +8,7 @@ import { Login } from "~/features/auth/routes/Login";
 import { SignUp } from "~/features/auth/routes/SignUp";
 import { Dashboard } from "~/features/dashboard/routes/Dashboard";
 import Transaction from "~/features/transactions/routes/Transaction";
+import UserSettings from "~/features/users/routes/UserSettings";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,15 @@ const router = createBrowserRouter([
                   {
                     path: ":id",
                     element: <Transaction />,
+                  },
+                ],
+              },
+              {
+                path: "user",
+                children: [
+                  {
+                    path: "settings",
+                    element: <UserSettings />,
                   },
                 ],
               },

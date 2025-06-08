@@ -2,11 +2,13 @@
 import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { getAuthenticatedUser, loginUser, logoutUser, signUpUser } from "~/features/auth/auth.api";
-import type { LoginInputs, SignUpInputs, User } from "~/features/auth/auth.schema";
+import type { LoginInputs, SignUpInputs } from "~/features/auth/auth.schema";
+import type { User } from "~/features/users/users.schema";
 import { ApiError } from "~/utils/errors";
 
 interface AuthContextType {
   user: User | null;
+  setUser: (user: User) => void;
   isLoading: boolean;
   handleLogin: (payload: LoginInputs) => Promise<void>;
   handleSignUp: (payload: SignUpInputs) => Promise<void>;
@@ -66,7 +68,7 @@ export const AuthProvider = () => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, handleLogin, handleSignUp, handleLogout }}>
+    <AuthContext.Provider value={{ user, isLoading, handleLogin, handleSignUp, handleLogout, setUser }}>
       {!isLoading && <Outlet />}
     </AuthContext.Provider>
   );

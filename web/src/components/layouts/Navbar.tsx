@@ -4,6 +4,7 @@ import { RiMenu2Line } from "react-icons/ri";
 import { useRef } from "react";
 import Menu from "~/components/ui/Menu";
 import { useToggle } from "~/hooks/useToggle";
+import { IoMdSettings } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 
 export const Navbar = () => {
@@ -30,11 +31,17 @@ export const Navbar = () => {
       <Menu close={close} icon={<RiMenu2Line size={25} />} isOpen={isOpen} ref={menuRef} toggle={toggle}>
         <ul className="flex flex-col p-2">
           <li role="menuitem" tabIndex={0} className="w-full cursor-pointer">
+            <Link
+              to="/user/settings"
+              className="text-primary flex w-full cursor-pointer items-center gap-2 p-2 font-semibold transition-all hover:bg-gray-100"
+            >
+              <IoMdSettings />
+              Settings
+            </Link>
+          </li>
+          <li role="menuitem" tabIndex={0} className="w-full cursor-pointer">
             <button
-              onClick={() => {
-                close();
-                onLogout();
-              }}
+              onClick={onLogout}
               className="text-accent-red flex w-full cursor-pointer items-center gap-2 p-2 font-semibold transition-all hover:bg-gray-100"
             >
               <MdLogout />

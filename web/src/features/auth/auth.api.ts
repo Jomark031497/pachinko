@@ -1,5 +1,6 @@
 import { __API_URL__ } from "~/constants";
-import type { LoginInputs, SignUpInputs, User } from "~/features/auth/auth.schema";
+import type { LoginInputs, SignUpInputs } from "~/features/auth/auth.schema";
+import type { User } from "~/features/users/users.schema";
 import { ApiError } from "~/utils/errors";
 
 export const getAuthenticatedUser = async (): Promise<User> => {
