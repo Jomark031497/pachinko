@@ -2,14 +2,12 @@ import { z } from "zod";
 import type { Account } from "~/features/accounts/accounts.schema";
 import type { Category } from "~/features/categories/categories.schema";
 
-// Define the possible transaction types, mirroring your pgEnum
-export const TRANSACTION_TYPES = ["income", "expense", "transfer"] as const;
+export const TRANSACTION_TYPES = ["income", "expense"] as const;
 
 export const createTransactionSchema = z.object({
   userId: z.string(),
   accountId: z.string(),
   categoryId: z.string(),
-  transferAccountId: z.string().optional(),
   type: z.enum(TRANSACTION_TYPES),
   transaction_date: z.date(),
   description: z.string().optional(),
@@ -59,9 +57,8 @@ export type Transaction = {
   userId: string;
   accountId: string;
   categoryId: string;
-  transferAccountId: string;
   name: string;
-  type: "income" | "expense" | "transfer";
+  type: "income" | "expense";
   amount: string;
   transaction_date: Date;
   description?: string;

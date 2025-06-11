@@ -33,6 +33,7 @@ const UpdateAccountDialog = ({ isOpen, onClose, account }: UpdateAccountDialogPr
       balance: account.balance,
       name: account.name,
       type: account.type,
+      icon: account.icon,
     },
   });
 
@@ -54,22 +55,28 @@ const UpdateAccountDialog = ({ isOpen, onClose, account }: UpdateAccountDialogPr
   };
 
   return (
-    <Dialog title="Update Account" isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <Input label="Name" {...register("name")} error={errors.name?.message} autoFocus />
+    <Dialog title="update account" isOpen={isOpen} onClose={onClose}>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-4 gap-4">
+        <Input
+          label="name*"
+          containerClassName="col-span-4"
+          {...register("name")}
+          error={errors.name?.message}
+          autoFocus
+        />
 
-        <Input label="Icon" {...register("icon")} error={errors.icon?.message} />
+        <Input label="icon" containerClassName="col-span-2" {...register("icon")} error={errors.icon?.message} />
 
-        <Select label="Type" {...register("type")} error={errors.type?.message}>
+        <Select label="type" containerClassName="col-span-2" {...register("type")} error={errors.type?.message}>
           {ACCOUNT_TYPE.map((item) => (
             <option key={item} value={item}>
-              {item}
+              {item.charAt(0).toUpperCase() + item.slice(1)}
             </option>
           ))}
         </Select>
 
-        <Button type="submit" disabled={mutation.isPending || isSubmitting}>
-          Update
+        <Button type="submit" className="col-span-2 col-start-2 px-8" disabled={mutation.isPending || isSubmitting}>
+          update
         </Button>
       </form>
     </Dialog>

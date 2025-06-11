@@ -61,7 +61,7 @@ export const Dialog = ({ isOpen, onClose, title, description, children, footer }
         {/* Header */}
         <div className="mb-4 flex items-start justify-between">
           <div>
-            <h2 className="text-lg font-semibold">{title}</h2>
+            <h2 className="text-lg font-semibold text-gray-500">{title}</h2>
             {description && <p className="text-sm text-gray-500">{description}</p>}
           </div>
           <button

@@ -27,7 +27,7 @@ export const Dashboard = () => {
       <div className="flex flex-col gap-8">
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-textSecondary text-lg font-semibold">accounts</h3>
+            <h3 className="text-textSecondary font-semibold">accounts</h3>
 
             <Button onClick={openCreateAccount} className="px-2 py-1.5 text-xs">
               add account
@@ -39,12 +39,12 @@ export const Dashboard = () => {
 
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-textSecondary text-lg font-semibold">summary</h3>
+            <h3 className="text-textSecondary font-semibold">summary</h3>
 
             <Select value={period} onChange={(e) => setPeriod(e.target.value as Period)} className="px-4">
-              <option value="this-week">This Week</option>
-              <option value="this-month">This Month</option>
-              <option value="this-year">This Year</option>
+              <option value="this-week">this week</option>
+              <option value="this-month">this month</option>
+              <option value="this-year">this year</option>
             </Select>
           </div>
 
@@ -53,7 +53,8 @@ export const Dashboard = () => {
 
         <section>
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-textSecondary text-lg font-semibold">recent transactions</h3>
+            <h3 className="text-textSecondary font-semibold">recent transactions</h3>
+
             <Button onClick={openCreateTransaction} className="px-2 py-1.5 text-xs">
               create transaction
             </Button>

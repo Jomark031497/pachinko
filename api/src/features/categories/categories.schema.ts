@@ -5,7 +5,7 @@ import { relations } from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { transactions } from "../transactions/transactions.schema.js";
 
-export const categoryTypeEnum = pgEnum("category_type", ["income", "expense", "transfer"]); //Changed name to type
+export const categoryTypeEnum = pgEnum("category_type", ["income", "expense"]); //Changed name to type
 
 export const categories = pgTable("categories", {
   id: text("id")

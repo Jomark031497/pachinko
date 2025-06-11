@@ -19,13 +19,7 @@ export const createAccountSchema = z.object({
   name: z.string().min(1, "Account name is required").max(100, "Account name must not exceed 100 characters"),
   type: z.enum(ACCOUNT_TYPE),
   userId: z.string(),
-  icon: z
-    .string()
-    .emoji()
-    .refine((val) => [...val].length === 1, {
-      message: "Only one emoji is allowed",
-    })
-    .optional(),
+  icon: z.string().optional(),
   balance: z
     .string({
       required_error: "Balance is required",

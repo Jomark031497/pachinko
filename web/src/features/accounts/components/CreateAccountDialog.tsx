@@ -58,23 +58,44 @@ const CreateAccountDialog = ({ isOpen, onClose, userId }: CreateAccountDialogPro
   };
 
   return (
-    <Dialog title="Create Account" isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <Input label="Name" {...register("name")} error={errors.name?.message} autoFocus />
-        <Input label="Icon" {...register("icon")} error={errors.icon?.message} />
+    <Dialog title="create Account" isOpen={isOpen} onClose={onClose}>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-4 gap-4">
+        <Input
+          label="name*"
+          containerClassName="col-span-4"
+          placeholder="ex. wallet, credit card, emergency funds"
+          {...register("name")}
+          error={errors.name?.message}
+          autoFocus
+        />
 
-        <Input label="Balance" type="number" step="0.01" {...register("balance")} error={errors.balance?.message} />
+        <Input
+          label="icon"
+          containerClassName="col-span-2"
+          placeholder="ex. 💸, 💰, 💳"
+          {...register("icon")}
+          error={errors.icon?.message}
+        />
 
-        <Select label="Type" {...register("type")} error={errors.type?.message}>
+        <Select label="type*" containerClassName="col-span-2" {...register("type")} error={errors.type?.message}>
           {ACCOUNT_TYPE.map((item) => (
             <option key={item} value={item}>
-              {item}
+              {item.charAt(0).toUpperCase() + item.slice(1)}
             </option>
           ))}
         </Select>
 
-        <Button type="submit" disabled={mutation.isPending || isSubmitting}>
-          Create
+        <Input
+          label="balance"
+          type="number"
+          step="0.01"
+          {...register("balance")}
+          error={errors.balance?.message}
+          containerClassName="col-span-4"
+        />
+
+        <Button type="submit" className="col-span-2 col-start-2 px-8" disabled={mutation.isPending || isSubmitting}>
+          create
         </Button>
       </form>
     </Dialog>

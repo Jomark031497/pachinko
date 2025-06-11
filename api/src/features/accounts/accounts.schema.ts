@@ -33,12 +33,7 @@ export const accountsRelations = relations(accounts, ({ one, many }) => ({
   transactions: many(transactions),
 }));
 
-export const insertAccountsSchema = createInsertSchema(accounts, {
-  icon: (t) =>
-    t.emoji().refine((val) => [...val].length === 1, {
-      message: "Only one emoji is allowed",
-    }),
-});
+export const insertAccountsSchema = createInsertSchema(accounts, {});
 export const selectAccountsSchema = createSelectSchema(accounts);
 export const updateAccountsSchema = insertAccountsSchema.omit({ userId: true, id: true }).partial().strict();
 
