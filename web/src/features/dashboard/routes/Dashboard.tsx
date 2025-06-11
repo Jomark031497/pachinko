@@ -13,14 +13,12 @@ const CreateAccountDialog = lazy(() => import("~/features/accounts/components/Cr
 const CreateTransactionDialog = lazy(() => import("~/features/transactions/components/CreateTransactionDialog"));
 
 export const Dashboard = () => {
-  const { user, isLoading: isAuthLoading } = useAuth();
+  const { user } = useAuth();
 
-  const [period, setPeriod] = useState<Period>("this-week");
+  const [period, setPeriod] = useState<Period>("this-month");
 
   const { open: openCreateAccount, close: closeCreateAccount, isOpen: isCreateAccountOpen } = useToggle();
   const { open: openCreateTransaction, close: closeCreateTransaction, isOpen: isCreateTransactionOpen } = useToggle();
-
-  if (isAuthLoading) return <div className="p-4 text-center text-gray-600">Loading user data...</div>;
 
   if (!user) return <Navigate to="/login" replace />;
 

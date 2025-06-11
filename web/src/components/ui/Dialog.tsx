@@ -66,7 +66,7 @@ export const Dialog = ({ isOpen, onClose, title, description, children, footer }
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 focus:outline-none"
+            className="cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none"
             aria-label="Close dialog"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

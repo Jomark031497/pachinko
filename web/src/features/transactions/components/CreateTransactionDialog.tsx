@@ -123,6 +123,11 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
               placeholderText="Select date"
               onChange={(date) => field.onChange(date)}
               selected={field.value}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={30}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              timeCaption="Time"
             />
           )}
         />
