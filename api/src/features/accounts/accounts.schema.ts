@@ -15,6 +15,7 @@ export const accounts = pgTable("accounts", {
     .$defaultFn(() => createId())
     .notNull(),
   name: varchar("name", { length: 255 }).notNull(),
+  icon: text("icon"),
   type: accountTypeEnum().notNull(),
   balance: decimal("balance", { precision: 12, scale: 2 }).notNull().default("0"),
   userId: text("user_id")
@@ -32,7 +33,7 @@ export const accountsRelations = relations(accounts, ({ one, many }) => ({
   transactions: many(transactions),
 }));
 
-export const insertAccountsSchema = createInsertSchema(accounts);
+export const insertAccountsSchema = createInsertSchema(accounts, {});
 export const selectAccountsSchema = createSelectSchema(accounts);
 export const updateAccountsSchema = insertAccountsSchema.omit({ userId: true, id: true }).partial().strict();
 

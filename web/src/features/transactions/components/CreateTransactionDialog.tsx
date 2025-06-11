@@ -81,30 +81,13 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
           ))}
         </Select>
 
-        <Select
-          label={transactionType === "transfer" ? "Source Account" : "Account"}
-          {...register("accountId")}
-          error={errors.accountId?.message}
-        >
+        <Select label="Account" {...register("accountId")} error={errors.accountId?.message}>
           {accounts?.data?.map((item) => (
             <option key={item.id} value={item.id}>
               {item.type} - {item.name}
             </option>
           ))}
         </Select>
-        {transactionType === "transfer" && (
-          <Select
-            label="Destination Account"
-            {...register("transferAccountId")}
-            error={errors.transferAccountId?.message}
-          >
-            {accounts?.data?.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.type} - {item.name}
-              </option>
-            ))}
-          </Select>
-        )}
 
         <Select label="Category" {...register("categoryId")} error={errors.categoryId?.message}>
           {categories?.map((item) => (
@@ -123,6 +106,11 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
               placeholderText="Select date"
               onChange={(date) => field.onChange(date)}
               selected={field.value}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={30}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              timeCaption="Time"
             />
           )}
         />

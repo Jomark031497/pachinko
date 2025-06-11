@@ -6,7 +6,7 @@ import { relations } from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { categories } from "../categories/categories.schema.js";
 
-export const transactionTypeEnum = pgEnum("transaction_type", ["income", "expense", "transfer"]);
+export const transactionTypeEnum = pgEnum("transaction_type", ["income", "expense"]);
 
 export const transactions = pgTable("transactions", {
   id: text("id")
@@ -19,7 +19,6 @@ export const transactions = pgTable("transactions", {
   accountId: text("account_id")
     .notNull()
     .references(() => accounts.id, { onDelete: "cascade" }),
-  transferAccountId: text("transfer_account_id").references(() => accounts.id), // nullable
   categoryId: text("category_id")
     .notNull()
     .references(() => categories.id),

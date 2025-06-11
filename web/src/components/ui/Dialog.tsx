@@ -61,12 +61,12 @@ export const Dialog = ({ isOpen, onClose, title, description, children, footer }
         {/* Header */}
         <div className="mb-4 flex items-start justify-between">
           <div>
-            <h2 className="text-lg font-semibold">{title}</h2>
+            <h2 className="text-lg font-semibold text-gray-500">{title}</h2>
             {description && <p className="text-sm text-gray-500">{description}</p>}
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 focus:outline-none"
+            className="cursor-pointer text-gray-400 hover:text-gray-600 focus:outline-none"
             aria-label="Close dialog"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
