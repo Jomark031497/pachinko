@@ -7,6 +7,7 @@ export type Period = "this-week" | "this-month" | "this-year";
 export interface Account {
   id: string;
   name: string;
+  icon?: string;
   type: "checking" | "savings" | "credit" | "cash";
   balance: string;
   userId: string;
@@ -18,6 +19,13 @@ export const createAccountSchema = z.object({
   name: z.string().min(1, "Account name is required").max(100, "Account name must not exceed 100 characters"),
   type: z.enum(ACCOUNT_TYPE),
   userId: z.string(),
+  icon: z
+    .string()
+    .emoji()
+    .refine((val) => [...val].length === 1, {
+      message: "Only one emoji is allowed",
+    })
+    .optional(),
   balance: z
     .string({
       required_error: "Balance is required",

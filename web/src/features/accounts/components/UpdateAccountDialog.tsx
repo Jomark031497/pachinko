@@ -58,6 +58,8 @@ const UpdateAccountDialog = ({ isOpen, onClose, account }: UpdateAccountDialogPr
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <Input label="Name" {...register("name")} error={errors.name?.message} autoFocus />
 
+        <Input label="Icon" {...register("icon")} error={errors.icon?.message} />
+
         <Select label="Type" {...register("type")} error={errors.type?.message}>
           {ACCOUNT_TYPE.map((item) => (
             <option key={item} value={item}>

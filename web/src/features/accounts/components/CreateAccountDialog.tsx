@@ -61,6 +61,8 @@ const CreateAccountDialog = ({ isOpen, onClose, userId }: CreateAccountDialogPro
     <Dialog title="Create Account" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <Input label="Name" {...register("name")} error={errors.name?.message} autoFocus />
+        <Input label="Icon" {...register("icon")} error={errors.icon?.message} />
+
         <Input label="Balance" type="number" step="0.01" {...register("balance")} error={errors.balance?.message} />
 
         <Select label="Type" {...register("type")} error={errors.type?.message}>
