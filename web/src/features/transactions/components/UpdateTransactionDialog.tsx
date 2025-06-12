@@ -86,7 +86,7 @@ const UpdateTransactionDialog = ({ isOpen, onClose, transaction }: UpdateTransac
         <Select label="Account" {...register("accountId")} error={errors.accountId?.message}>
           {accounts?.data?.map((item) => (
             <option key={item.id} value={item.id}>
-              {item.type} - {item.name}
+              {item.name}
             </option>
           ))}
         </Select>

@@ -42,6 +42,7 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
       userId,
       transactionDate: new Date(format(new Date(), "MM dd yyyy")),
       accountId,
+      amount: "0.00",
     },
   });
 
@@ -84,7 +85,7 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
         <Select label="Account" {...register("accountId")} error={errors.accountId?.message}>
           {accounts?.data?.map((item) => (
             <option key={item.id} value={item.id}>
-              {item.type} - {item.name}
+              {item.name}
             </option>
           ))}
         </Select>
