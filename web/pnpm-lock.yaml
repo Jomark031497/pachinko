@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@fontsource/fira-mono':
-        specifier: ^5.2.6
-        version: 5.2.6
       '@formkit/auto-animate':
         specifier: ^0.8.2
         version: 0.8.2
@@ -323,9 +320,6 @@ packages:
 
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
-
-  '@fontsource/fira-mono@5.2.6':
-    resolution: {integrity: sha512-6pyiGeFH+5DP5sICSwx5wu+9BlTEMTKki7bTppsEqXJysi1MiK82n6oSUaYkQWRLH51+DK7zv2JJsi82cOIS3g==}
 
   '@formkit/auto-animate@0.8.2':
     resolution: {integrity: sha512-SwPWfeRa5veb1hOIBMdzI+73te5puUBHmqqaF1Bu7FjvxlYSz/kJcZKSa9Cg60zL0uRNeJL2SbRxV6Jp6Q1nFQ==}
@@ -1631,8 +1625,6 @@ snapshots:
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.9': {}
-
-  '@fontsource/fira-mono@5.2.6': {}
 
   '@formkit/auto-animate@0.8.2': {}
 
