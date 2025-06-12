@@ -60,7 +60,7 @@ export const Dashboard = () => {
             </Button>
           </div>
 
-          <UserTransactionsList userId={user.id} />
+          <UserTransactionsList user={user} />
         </section>
       </div>
 

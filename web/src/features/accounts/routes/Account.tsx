@@ -100,7 +100,7 @@ export default function Account() {
             </Button>
           </div>
 
-          <AccountTransactionsList accountId={account.id} />
+          <AccountTransactionsList accountId={account.id} currency={user?.currency ?? "USD"} />
         </section>
       </div>
 

@@ -2,12 +2,14 @@ import Pagination from "~/components/ui/Pagination";
 import TransactionsList from "./TransactionsList";
 import useTransactionsByAccountId from "~/features/transactions/hooks/useTransactionsByAccountId";
 import usePagination from "~/hooks/usePagination";
+import type { User } from "~/features/users/users.schema";
 
 interface Props {
   accountId: string;
+  currency: User["currency"];
 }
 
-const AccountTransactionsList = ({ accountId }: Props) => {
+const AccountTransactionsList = ({ accountId, currency }: Props) => {
   const { limit, offset, nextPage, page, prevPage } = usePagination({ initialLimit: 5, initialPage: 1 });
   const { data: transactions, isLoading } = useTransactionsByAccountId(accountId, { limit, offset });
 
@@ -23,7 +25,7 @@ const AccountTransactionsList = ({ accountId }: Props) => {
   return (
     <div className="flex flex-col gap-2 rounded border border-gray-300 p-4 shadow">
       <Pagination nextPage={nextPage} page={page} prevPage={prevPage} totalPages={transactions.totalPages} />
-      <TransactionsList transactions={transactions.data} />
+      <TransactionsList transactions={transactions.data} currency={currency} />
     </div>
   );
 };
