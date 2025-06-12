@@ -34,7 +34,7 @@ export const Dashboard = () => {
             </Button>
           </div>
 
-          <AccountsList userId={user.id} />
+          <AccountsList user={user} />
         </section>
 
         <section>

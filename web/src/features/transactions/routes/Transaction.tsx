@@ -3,6 +3,7 @@ import { CgMoreVerticalO } from "react-icons/cg";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { useParams } from "react-router";
 import IconButton from "~/components/ui/IconButton";
+import { useAuth } from "~/features/auth/hooks/useAuth";
 import TransactionCard from "~/features/transactions/components/TransactionCard";
 import useTransactionById from "~/features/transactions/hooks/useTransactionById";
 import { useToggle } from "~/hooks/useToggle";
@@ -11,6 +12,8 @@ const UpdateTransactionDialog = lazy(() => import("~/features/transactions/compo
 const DeleteTransactionDialog = lazy(() => import("~/features/transactions/components/DeleteTransactionDialog"));
 
 const Transaction = () => {
+  const { user } = useAuth();
+
   const { id } = useParams();
   const { data: transaction } = useTransactionById(id as string);
 
@@ -83,7 +86,7 @@ const Transaction = () => {
           </div>
         </div>
 
-        <TransactionCard transaction={transaction} />
+        <TransactionCard transaction={transaction} currency={user?.currency ?? "USD"} asLink={false} />
       </section>
 
       <Suspense fallback={null}>

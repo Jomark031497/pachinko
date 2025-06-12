@@ -11,12 +11,15 @@ import type { Period } from "~/features/accounts/accounts.schema";
 import AccountSummary from "~/features/accounts/components/AccountSummary";
 import Menu from "~/components/ui/Menu";
 import { IoMdSettings } from "react-icons/io";
+import { useAuth } from "~/features/auth/hooks/useAuth";
 
 const UpdateAccountDialog = lazy(() => import("~/features/accounts/components/UpdateAccountDialog"));
 const DeleteAccountDialog = lazy(() => import("~/features/accounts/components/DeleteAccountDialog"));
 const CreateTransactionDialog = lazy(() => import("~/features/transactions/components/CreateTransactionDialog"));
 
 export default function Account() {
+  const { user } = useAuth();
+
   const { id } = useParams();
   const { data: account } = useAccountById(id as string);
   const { close: closeMenu, isOpen: isMenuOpen, toggle: toggleMenu } = useToggle(false);
@@ -71,7 +74,7 @@ export default function Account() {
             </Menu>
           </div>
 
-          <AccountCard account={account} />
+          <AccountCard account={account} currency={user?.currency ?? "USD"} asLink={false} />
         </section>
 
         <section>
