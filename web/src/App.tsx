@@ -9,6 +9,7 @@ import { SignUp } from "~/features/auth/routes/SignUp";
 import { Dashboard } from "~/features/dashboard/routes/Dashboard";
 import Transaction from "~/features/transactions/routes/Transaction";
 import UserSettings from "~/features/users/routes/UserSettings";
+import NotFound from "~/utils/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
