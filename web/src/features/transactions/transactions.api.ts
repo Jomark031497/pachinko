@@ -67,10 +67,7 @@ export const createTransaction = async (payload: CreateTransactionInput): Promis
   const response = await fetch(url, {
     method: "POST",
     credentials: "include",
-    body: JSON.stringify({
-      ...payload,
-      transaction_date: new Date(payload.transaction_date),
-    }),
+    body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
     },

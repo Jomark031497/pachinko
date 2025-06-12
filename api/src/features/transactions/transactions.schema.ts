@@ -25,7 +25,7 @@ export const transactions = pgTable("transactions", {
   name: varchar("name", { length: 255 }).notNull(),
   type: transactionTypeEnum().notNull(),
   amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
-  transaction_date: timestamp("transaction_date", { mode: "string", withTimezone: true }).notNull().defaultNow(),
+  transactionDate: timestamp("transaction_date", { mode: "string", withTimezone: true }).notNull().defaultNow(),
   description: text("description"),
   createdAt: timestamp("created_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true }).notNull().defaultNow(),

@@ -9,7 +9,7 @@ export const createTransactionSchema = z.object({
   accountId: z.string(),
   categoryId: z.string(),
   type: z.enum(TRANSACTION_TYPES),
-  transaction_date: z.date(),
+  transactionDate: z.date(),
   description: z.string().optional(),
   name: z.string(),
   amount: z
@@ -60,7 +60,7 @@ export type Transaction = {
   name: string;
   type: "income" | "expense";
   amount: string;
-  transaction_date: Date;
+  transactionDate: Date;
   description?: string;
 };
 

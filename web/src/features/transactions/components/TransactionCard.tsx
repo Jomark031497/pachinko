@@ -38,7 +38,7 @@ const TransactionCard = ({ transaction }: Props) => {
           {toCurrency(transaction.amount, user?.currency)}
         </p>
         <p className="col-span-2 text-sm italic">{transaction.category.name}</p>
-        <p className="text-right text-sm">{format(transaction.transaction_date, "MMM dd, yyyy")}</p>
+        <p className="text-right text-sm">{format(transaction.transactionDate, "MMM dd, yyyy")}</p>
         <p className="col-span-2 text-sm">{transaction.account.name}</p>
         <p className="text-right text-sm">{transaction.account.type}</p>
       </div>
