@@ -36,4 +36,19 @@ const TransactionCard = ({ transaction, currency, asLink = true }: Props) => {
   return asLink ? <Link to={`/transactions/${transaction.id}`}>{content}</Link> : content;
 };
 
+export const TransactionCardSkeleton = () => {
+  return (
+    <div className="grid animate-pulse grid-cols-3 rounded border border-dashed border-gray-300 p-2 text-gray-500 shadow">
+      <div className="col-span-2 h-4 w-3/4 rounded bg-gray-300" />
+      <div className="h-4 w-1/3 justify-self-end rounded bg-gray-300" />
+
+      <div className="col-span-2 mt-2 h-3 w-1/2 rounded bg-gray-200" />
+      <div className="mt-2 h-3 w-1/4 justify-self-end rounded bg-gray-200" />
+
+      <div className="col-span-2 mt-2 h-3 w-2/3 rounded bg-gray-200" />
+      <div className="mt-2 h-3 w-1/3 justify-self-end rounded bg-gray-200" />
+    </div>
+  );
+};
+
 export default TransactionCard;
