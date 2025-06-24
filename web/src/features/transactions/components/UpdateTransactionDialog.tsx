@@ -41,7 +41,7 @@ const UpdateTransactionDialog = ({ isOpen, onClose, transaction }: UpdateTransac
       categoryId: transaction.categoryId,
       description: transaction.description ?? "",
       name: transaction.name,
-      transaction_date: new Date(format(transaction.transaction_date, "MM/dd/yyyy")),
+      transactionDate: new Date(format(transaction.transactionDate, "MM/dd/yyyy")),
       type: transaction.type ?? "income",
     },
   });
@@ -86,7 +86,7 @@ const UpdateTransactionDialog = ({ isOpen, onClose, transaction }: UpdateTransac
         <Select label="Account" {...register("accountId")} error={errors.accountId?.message}>
           {accounts?.data?.map((item) => (
             <option key={item.id} value={item.id}>
-              {item.type} - {item.name}
+              {item.name}
             </option>
           ))}
         </Select>
@@ -99,18 +99,9 @@ const UpdateTransactionDialog = ({ isOpen, onClose, transaction }: UpdateTransac
           ))}
         </Select>
 
-        {/* <Input
-          type="date"
-          {...register("transaction_date", {
-            valueAsDate: true,
-          })}
-          label="Date"
-          error={errors.transaction_date?.message}
-        /> */}
-
         <Controller
           control={control}
-          name="transaction_date"
+          name="transactionDate"
           render={({ field }) => (
             <DatePicker
               label="Transaction Date"

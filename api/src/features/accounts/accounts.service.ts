@@ -46,7 +46,7 @@ export const getSummaryForUser = async (userId: Account["userId"], period: Perio
         and(
           eq(transactions.userId, userId),
           eq(transactions.type, "income"),
-          between(transactions.transaction_date, start.toISOString(), end.toISOString())
+          between(transactions.transactionDate, start.toISOString(), end.toISOString())
         )
       ),
 
@@ -57,7 +57,7 @@ export const getSummaryForUser = async (userId: Account["userId"], period: Perio
         and(
           eq(transactions.userId, userId),
           eq(transactions.type, "expense"),
-          between(transactions.transaction_date, start.toISOString(), end.toISOString())
+          between(transactions.transactionDate, start.toISOString(), end.toISOString())
         )
       ),
   ]);
@@ -84,7 +84,7 @@ export const getSummaryForAccount = async (accountId: Account["id"], period: Per
         and(
           eq(transactions.accountId, accountId),
           eq(transactions.type, "income"),
-          between(transactions.transaction_date, start.toISOString(), end.toISOString())
+          between(transactions.transactionDate, start.toISOString(), end.toISOString())
         )
       ),
 
@@ -95,7 +95,7 @@ export const getSummaryForAccount = async (accountId: Account["id"], period: Per
         and(
           eq(transactions.accountId, accountId),
           eq(transactions.type, "expense"),
-          between(transactions.transaction_date, start.toISOString(), end.toISOString())
+          between(transactions.transactionDate, start.toISOString(), end.toISOString())
         )
       ),
   ]);
@@ -126,6 +126,7 @@ export const createAccount = async (payload: NewAccount) => {
       name: "Initial Balance",
       type: "income",
       categoryId: category.id,
+      transactionDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
     });
 
     return newAccount;

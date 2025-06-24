@@ -45,7 +45,7 @@ export const getAllTransactionsByUserId = async (
     },
     limit,
     offset,
-    orderBy: (transactions, { desc }) => [desc(transactions.transaction_date), desc(transactions.createdAt)],
+    orderBy: (transactions, { desc }) => [desc(transactions.transactionDate), desc(transactions.createdAt)],
   });
 
   const countQuery = await db.$count(transactions, eq(transactions.userId, userId));
@@ -73,7 +73,7 @@ export const getAllTransactionsByAccountId = async (
     },
     limit,
     offset,
-    orderBy: (transactions, { desc }) => [desc(transactions.transaction_date), desc(transactions.createdAt)],
+    orderBy: (transactions, { desc }) => [desc(transactions.transactionDate), desc(transactions.createdAt)],
   });
 
   const countQuery = await db.$count(transactions, eq(transactions.accountId, accountId));

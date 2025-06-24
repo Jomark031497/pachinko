@@ -1,28 +1,15 @@
 import Pagination from "~/components/ui/Pagination";
-import AccountCard from "~/features/accounts/components/AccountCard";
+import AccountCard, { AccountCardSkeleton } from "~/features/accounts/components/AccountCard";
 import useUserAccounts from "~/features/accounts/hooks/useUserAccounts";
 import usePagination from "~/hooks/usePagination";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import type { User } from "~/features/users/users.schema";
 
 interface AccountsListProps {
-  userId: User["id"];
+  user: User;
 }
 
-const AccountCardSkeleton = () => {
-  return (
-    <div className="rounded bg-gray-200 bg-gradient-to-r p-2 text-white shadow">
-      <div className="mb-1 h-4 w-1/2 animate-pulse rounded bg-gray-400/50" />
-      <div className="mb-2 h-3 w-1/4 animate-pulse rounded bg-gray-400/30" />
-      <div className="flex flex-col items-end gap-1">
-        <div className="h-3 w-1/2 animate-pulse rounded bg-gray-400/30" />
-        <div className="h-4 w-1/3 animate-pulse rounded bg-gray-400/40" />
-      </div>
-    </div>
-  );
-};
-
-export default function AccountsList({ userId }: AccountsListProps) {
+export default function AccountsList({ user }: AccountsListProps) {
   const [listParent] = useAutoAnimate();
 
   const { limit, offset, nextPage, page, prevPage } = usePagination({
@@ -30,7 +17,7 @@ export default function AccountsList({ userId }: AccountsListProps) {
     initialPage: 1,
   });
 
-  const { data: accounts, isLoading } = useUserAccounts(userId, {
+  const { data: accounts, isLoading } = useUserAccounts(user.id, {
     limit,
     offset,
   });
@@ -39,11 +26,9 @@ export default function AccountsList({ userId }: AccountsListProps) {
     return (
       <>
         <div role="status" className="flex flex-col gap-2">
-          <AccountCardSkeleton />
-          <AccountCardSkeleton />
-          <AccountCardSkeleton />
-          <AccountCardSkeleton />
-          <AccountCardSkeleton />
+          {Array.from({ length: limit }).map((_, i) => (
+            <AccountCardSkeleton key={i} />
+          ))}
         </div>
         <div className="h-[42px]" />
       </>
@@ -63,7 +48,7 @@ export default function AccountsList({ userId }: AccountsListProps) {
       <ul ref={listParent} className="mb-4 flex flex-col gap-2">
         {accounts.data.map((item) => (
           <li key={item.id}>
-            <AccountCard account={item} />
+            <AccountCard account={item} currency={user.currency} />
           </li>
         ))}
       </ul>

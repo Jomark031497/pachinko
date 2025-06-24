@@ -15,7 +15,6 @@ input[type='number'] {
 }
 
 @theme {
-    --font-sans: 'Fira Mono', monospace;
     --color-textPrimary: #040606;
     --color-textSecondary: #495057;
     --color-background: #e2eaee;

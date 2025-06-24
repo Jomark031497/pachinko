@@ -17,7 +17,7 @@ const DatePicker = forwardRef<ReactDatePicker, DatePickerProps>(({ label, error,
         {...rest}
         ref={ref}
         className="hover:border-primary focus:border-primary border-primary/50 mt-0.5 block w-full rounded border-2 px-1.5 py-1 transition-all outline-none"
-        dateFormat="MMM dd yyyy h:mm aa"
+        dateFormat="MMM dd yyyy"
       />
       {error && <span className="text-sm text-red-500">{error}</span>}
     </label>

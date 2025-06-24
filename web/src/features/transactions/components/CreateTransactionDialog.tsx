@@ -40,8 +40,9 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
     defaultValues: {
       type: "income",
       userId,
-      transaction_date: new Date(format(new Date(), "MM dd yyyy")),
+      transactionDate: new Date(format(new Date(), "MM dd yyyy")),
       accountId,
+      amount: "0.00",
     },
   });
 
@@ -84,7 +85,7 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
         <Select label="Account" {...register("accountId")} error={errors.accountId?.message}>
           {accounts?.data?.map((item) => (
             <option key={item.id} value={item.id}>
-              {item.type} - {item.name}
+              {item.name}
             </option>
           ))}
         </Select>
@@ -99,18 +100,13 @@ const CreateTransactionDialog = ({ isOpen, onClose, userId, accountId }: Props) 
 
         <Controller
           control={control}
-          name="transaction_date"
+          name="transactionDate"
           render={({ field }) => (
             <DatePicker
               label="Transaction Date"
               placeholderText="Select date"
               onChange={(date) => field.onChange(date)}
               selected={field.value}
-              showTimeSelect
-              timeFormat="HH:mm"
-              timeIntervals={30}
-              dateFormat="MMMM d, yyyy h:mm aa"
-              timeCaption="Time"
             />
           )}
         />
