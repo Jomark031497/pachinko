@@ -17,7 +17,7 @@ export const createApp = () => {
     cors({
       origin: [envs.CLIENT_URL],
       credentials: true,
-    })
+    }),
   );
 
   app.use(express.json());
@@ -38,8 +38,9 @@ export const createApp = () => {
         httpOnly: true,
         maxAge: 3600000 * 24,
         secure: __IS_PROD__,
+        sameSite: "lax",
       },
-    })
+    }),
   );
 
   initializeRoutes(app);
