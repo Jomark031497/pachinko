@@ -5,8 +5,8 @@ import cors from "cors";
 import { __COOKIE_NAME__, __IS_PROD__ } from "./constants.js";
 import { envs } from "./config/envs.js";
 import { initializeRoutes } from "./routes.js";
-import { Redis } from "ioredis";
 import { RedisStore } from "connect-redis";
+import { createClient } from "redis";
 
 export const createApp = () => {
   const app = express();
@@ -21,11 +21,12 @@ export const createApp = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  const redisClient = new Redis();
+  const redisClient = createClient();
+  redisClient.connect().catch(console.error);
 
   const redisStore = new RedisStore({
     client: redisClient,
-    prefix: "sess:",
+    prefix: "pachinko:",
   });
 
   app.use(
