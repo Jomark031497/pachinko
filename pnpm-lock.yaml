@@ -18,6 +18,9 @@ importers:
       '@types/node':
         specifier: ^22.15.17
         version: 22.15.34
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -155,9 +158,6 @@ importers:
       globals:
         specifier: ^16.0.0
         version: 16.2.0
-      prettier:
-        specifier: ^3.5.3
-        version: 3.6.2
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
         version: 0.6.13(prettier@3.6.2)
