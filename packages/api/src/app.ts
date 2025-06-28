@@ -3,15 +3,13 @@ import { errorHandler } from "./middleswares/error-handler.js";
 import session from "express-session";
 import cors from "cors";
 import { __COOKIE_NAME__, __IS_PROD__ } from "./constants.js";
-import connectPgSimple from "connect-pg-simple";
 import { envs } from "./config/envs.js";
-import { pool } from "./db/database.js";
 import { initializeRoutes } from "./routes.js";
+import { Redis } from "ioredis";
+import { RedisStore } from "connect-redis";
 
 export const createApp = () => {
   const app = express();
-
-  const PgSession = connectPgSimple(session);
 
   app.use(
     cors({
@@ -23,13 +21,16 @@ export const createApp = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  const redisClient = new Redis();
+
+  const redisStore = new RedisStore({
+    client: redisClient,
+    prefix: "sess:",
+  });
+
   app.use(
     session({
-      store: new PgSession({
-        pool: pool,
-        tableName: "session",
-        createTableIfMissing: true,
-      }),
+      store: redisStore,
       secret: envs.SECRET_KEY,
       name: __COOKIE_NAME__,
       saveUninitialized: false,

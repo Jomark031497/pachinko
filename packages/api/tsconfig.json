@@ -8,7 +8,7 @@
     "moduleResolution": "NodeNext",
     "lib": ["ESNext"],
     "outDir": "dist",
-    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "typeRoots": ["./src/types", "../../node_modules/@types"],
     "allowJs": true
   },
   "exclude": ["node_modules"],
