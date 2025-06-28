@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "isolatedModules": true,
+    "sourceMap": true,
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ESNext"],
+    "outDir": "dist",
+    "typeRoots": ["./src/types", "../../node_modules/@types"],
+    "allowJs": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*"]
+}
